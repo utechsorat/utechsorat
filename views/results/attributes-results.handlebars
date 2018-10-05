@@ -1,0 +1,114 @@
+<div id="assessmentBackground">
+    <div id="imgOverlay">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4>{{user.firstname}} {{user.lastname}}</h4>
+                            <hr>
+                            <!--<a href="#">
+                                <span class="fa fa-file-pdf-o"></span> Print / Download Report
+                            </a>
+                            <br>
+                            <a href="#">
+                                <span class="fa fa-envelope-o"></span> Email Report
+                            </a>-->
+                            <br>
+                            <br>
+
+                            <div class="list-group">
+                                <a href="/results/summary" class="list-group-item ">
+                                    <span class="glyphicon glyphicon-list-alt " aria-hidden="true"></span> Summary
+                                </a>
+                                <a href="/results/individual-attributes" class="list-group-item btn-color">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Individual Attributes
+                                </a>
+                                <a href="/results/life-factors" class="list-group-item">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Life Factors
+                                </a>
+                                <a href="/results/technology-factors" class="list-group-item">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Technical Factors
+                                </a>
+                                <a href="/results/reading" class="list-group-item">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Reading Skills
+                                </a>
+                                <a href="/results/typing" class="list-group-item">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Typing Skills
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <h4>Individual Attributes</h4>
+                            <p>
+                                This section assesses the most important individual attributes we believe a student should possess in order to contribute
+                                to their success in an online learning environment.
+                            </p>
+                            <canvas id="sectionSummary" class="mb-4 pb-4"></canvas>
+                            {{#each results}}
+                            <h4>{{factor}}</h4>
+                            <hr>
+                            <p>
+                                {{{response}}}
+                            </p>
+                            {{/each}}
+                            <a href="/results/summary" class="btn btn-primary btn-color">Previous Section</a>
+                            <a href="/results/life-factors" class="btn btn-primary btn-color">Next Section</a>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+    var results = {{{ resultString }}};
+    var labelArray = [];
+    var dataArray = []
+    for (let i = 0; i < results.length; i++) {
+        labelArray.push(results[i].factor);
+        dataArray.push(results[i].value);
+    }
+    window.onload = function () {
+        console.log(hello);
+    }
+    var ctx = document.getElementById('sectionSummary').getContext('2d');
+    var summaryChart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+        // The data for our dataset
+        data: {
+            labels: labelArray,
+            datasets: [{
+                label: "Online Readiness Sections",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: dataArray,
+            }]
+        },
+        // Configuration options go here
+        options: {
+            title: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        steps: 10,
+                        stepValue: 5,
+                        max: 100,
+                        callback: function (value) {
+                            return value + "%"
+                        }
+                    }
+                }]
+            }
+        }
+    });
+</script>

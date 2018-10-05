@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h1>{{title}}</h1>
+            </div>
+            <div class="col-md-3">
+                <a href="/questions/add" class="btn btn-primary mt-50">Add Question</a>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Question</th>
+            <th>Factor</th>
+            <th>
+            </th>
+        </tr>
+        {{#each questions}}
+        <tr>
+            <td>{{text}}</td>
+            <td>{{factor}}</td>
+            <td>
+                <a class="btn btn-primary btn-sm" href="/questions/edit/{{_id}}">Edit</a>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+
+</div>

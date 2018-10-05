@@ -1,0 +1,13 @@
+
+{{#if error}}
+<ul>
+  <li class="text-danger text-left">{{error}}</li>
+</ul>
+{{/if}}
+
+{{#each errors}}
+<ul>
+  <p class="text-danger text-left">Please correct all areas in error as indicated below</p>
+  <li class="text-danger text-left">{{text}}</li>
+</ul>
+{{/each}}

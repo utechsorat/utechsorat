@@ -1,0 +1,170 @@
+<div id="admin">
+  <div class="admin-inner">
+    {{> _sidebar}}
+    <!-- cards -->
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row pt-md-3 mt-md-3 ">
+              <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <i class="fas fa-users fa-3x text-warning"></i>
+                      <div class="text-right text-secondary">
+                        <h5>Users</h5>
+                        <h3>100</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-secondary">
+                    <i class="fas fa-sync mr-3"></i>
+                    <span>Updated Now</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <i class="fas fa-puzzle-piece fa-3x text-success"></i>
+                      <div class="text-right text-secondary">
+                        <h5>Factors</h5>
+                        <h3>10</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-secondary">
+                    <i class="fas fa-sync mr-3"></i>
+                    <span>Updated Now</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <i class="fas fa-question fa-3x text-info"></i>
+                      <div class="text-right text-secondary">
+                        <h5>Questions</h5>
+                        <h3>50</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-secondary">
+                    <i class="fas fa-sync mr-3"></i>
+                    <span>Updated Now</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <i class="fas fa-chart-line fa-3x text-danger"></i>
+                      <div class="text-right text-secondary">
+                        <h5>Results</h5>
+                        <h3>50</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-secondary">
+                    <i class="fas fa-sync mr-3"></i>
+                    <span>Updated Now</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end of cards -->
+
+    <!-- charts -->
+    <section>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-6 col-12 mb-4 mb-xl-0">
+                <h3 class="text-muted text-center mb-3">Users by Age</h3>
+                <canvas id="ageChart"></canvas>
+
+              </div>
+              <div class="col-xl-6 col-12">
+                <h3 class="text-muted text-center mb-3">Users by Nationality</h3>
+                <canvas id="nationalityChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end of tables -->
+
+
+  </div>
+</div>
+
+<!-- Graphs -->
+    <script>
+      var ctx = document.getElementById("ageChart");
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["16 - 19", "20 - 25", "26 - 35", "36 - 45", "46 - 55", "56 and over"],
+          datasets: [{
+            data: [36, 20, 20, 10, 5, 5, 4],
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>
+
+    <script>
+      var ctx = document.getElementById("nationalityChart");
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ["Jamaica", "United States", "Trinidad", "Cuba", "Barbados", "Guyana"],
+          datasets: [{
+            data: [36, 20, 20, 10, 5, 5, 4],
+            lineTension: 0,
+            backgroundColor: '#007bff',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }]
+          },
+          legend: {
+            display: false,
+          }
+        }
+      });
+    </script>

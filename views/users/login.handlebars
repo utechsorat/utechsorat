@@ -1,0 +1,30 @@
+<section id="login" class="py-5">
+    <div class="login-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card login-form text-dark">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h3>Login</h3>
+                                <p>Fill out this form to login</p>
+                                {{> _errors}}
+                            </div>
+                            <form action="/users/login" method="post">
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control" placeholder="Email" required value={{email}}>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control" placeholder="Password" required value={{password}}>
+                                </div>
+                                <input type="submit" class="btn btn-block btn-outline-dark">
+                                <p class="mb-0 mt-2" >Don't have an account? <a href="/users/register">click here</a></p>
+                                <p>Forgot password? <a href="#">click here</a></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

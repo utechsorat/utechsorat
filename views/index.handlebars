@@ -1,0 +1,174 @@
+<section id="home" class="p-5">
+    <div class="home-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto ">
+                    <div class="text-center">
+                        <h3 class="display-4 text-center">Are you <strong>Ready</strong> for <strong> Online Learning?</strong></h3>
+                        <p class="lead text-center">Find out today with <strong>UTech SORAT!</strong></p>
+                        {{#if user}}
+                        <a class="d-xl-none d-lg-none btn text-center assessment-btn">Access Assessment! <i class="fas fa-arrow-circle-right fa-lg"></i></a>
+                        {{else}}
+                        <a class="d-xl-none d-lg-none btn btn-outline-dark text-center">Register Now!</a>
+                        {{/if}}
+                    </div>
+                    <div class="d-none d-lg-block">
+                        <div class="d-flex flex-row">
+                            <div class="p-3 align-self-start">
+                                <i class="fa fa-check"></i>
+                            </div>
+                            <div class="p-3 align-self-end">
+                                The online learning environment is totally different from that of learning in a
+                                classroom and most
+                                persons do not have any experience within that environment.
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row">
+                            <div class="p-3 align-self-start">
+                                <i class="fa fa-check"></i>
+                            </div>
+                            <div class="p-3 align-self-end">
+                                Interventions such as readiness tools tend to be used to assess a person’s readiness
+                                for this new
+                                environment. <strong>The Office of Distance Learning (ODL)</strong> has sought to
+                                assess student
+                                online readiness
+                                through UTech's <strong>Student Online Readiness Assessment Tool (SORAT)</strong>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-none d-lg-block">
+                    {{#if user}}
+                    <div class="row h-100">
+                        <div class="m-auto">
+                            <a class="btn btn-block btn-lg p-5 assessment-btn">Access Assessment! <i class="fas fa-arrow-circle-right fa-lg"></i></a>
+                        </div>
+                    </div>
+
+                    {{else}}
+                    <div class="card card-form text-dark">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h3>Register Now</h3>
+                                <p>Fill out this form to register</p>
+                            </div>
+                            <form action="/users/register" method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="firstname" placeholder="First Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="lastname" placeholder="Last Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="email" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="password" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
+                                </div>
+                                <input type="submit" class="btn btn-block btn-outline-dark">
+                                <p class="mt-2">Returning user?<a href="/users/login"> click here</a></p>
+                            </form>
+                        </div>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<section id="readiness" class="bg-light text-muted py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="img/register.jpg" alt="" class="img-fluid my-3 rounded-circle">
+            </div>
+            <div class="col-md-6">
+                <h3>Characteristics of an Online Learner</h3>
+                <p>According to literature there are several characteristics an online learner should possess. Here are
+                    a
+                    few:</p>
+                <div class="d-flex flex-row">
+                    <div class="p-3 align-self-start">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <div class="p-3 align-self-end">
+                        <p>Computer attitudes and computer self-efficacy are two of the most frequently cited learner
+                            characteristics that has an association with distance learning and e-learning Park &
+                            Wentling (2007).</p>
+                    </div>
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="d-flex flex-row">
+                        <div class="p-3 align-self-start">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="p-3 align-self-end">
+                            <p>The ability of the student to manage their time and to adapt to self-directed nature of
+                                online
+                                learning Pillay, Irving and Tones (2007).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="d-flex flex-row">
+                        <div class="p-3 align-self-start">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="p-3 align-self-end">
+                            <p>A person who has the requisite knowledge, attitudes, skills and habits in technology
+                                will have an
+                                advantage over the novices (Piskurich, 2003).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="bg-dark py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card card-form text-dark">
+                    <div class="card-body">
+                        <h3>Get In Touch</h3>
+                        <p>Need help or have a question?</p>
+                        <form>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <textarea class="form-control" placeholder="Message" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <input type="submit" value="Submit" class="btn btn-outline-dark btn-block">
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-lg-3 d-none d-lg-block align-self-center">
+                <img src="img/utechlogo.png" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>

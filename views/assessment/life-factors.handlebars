@@ -1,0 +1,51 @@
+<div id="assessmentBackground">
+    <div id="imgOverlay">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>{{title}}</h1>
+                    <hr>
+                    <p>
+                        This section assesses the most important life factors we believe may have an effect on the student experience in an online
+                        learning environment and their success. These factors include: {{#each factors}}
+                        <span
+                            class="font-weight-bold">{{title}}</span>, {{/each}} etc.
+                    </p>
+
+                    <form action="/assessment/life-factors" method="post">
+                        {{#each questions}}
+                        <div class="card bg-light mt-2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <p>
+                                        {{text}}
+                                    </p>
+                                    <img src="{{image}}">
+                                </div>
+                                <div class="card-body">
+                                    {{#each answers}}
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" value="{{value}}" name="{{../_id}}" required> {{text}}
+                                        </label>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        <br>
+                        <div class="progress" style="height: 20px">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-gold" role="progressbar" aria-valuenow="35"
+                                aria-valuemin="0" aria-valuemax="100" style="width: 35%">35%</div>
+                        </div>
+                        <br>
+                        <div class="text-center mb-2">
+                            <button type="submit" class="btn btn-primary btn-color">Save and Continue</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

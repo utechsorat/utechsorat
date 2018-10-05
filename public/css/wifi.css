@@ -1,0 +1,58 @@
+#loader {
+  border: 6px solid #f6c52d;
+  border-radius: 45%;
+  border-top: 6px solid #0f0c44;
+  width: 120px;
+  height: 120px;
+  display: none;
+  animation: spin 2s linear infinite;
+  text-align: center;
+}
+
+#loaderText {
+  width: 120px;
+  height: 60px;
+  display: none;
+
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Add animation to result*/
+.animate-result {
+  font-size: 20px;
+  animation-name: animatebottom;
+  animation-duration: 4s;
+  
+}
+
+@keyframes animatebottom {
+  from {
+    bottom: -100px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0px;
+    opacity: 1;
+  }
+}
+
+#result {
+  display: none;
+  text-align: center;
+}
+
+#button {
+  border: 6px solid #f6c52d;
+  border-radius: 45%;
+  width: 120px;
+  height: 120px;
+}
+

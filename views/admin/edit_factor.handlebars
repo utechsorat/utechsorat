@@ -1,0 +1,51 @@
+<div class="container">
+
+<h1>{{title}}</h1>
+<hr>
+
+<form action="/factors/edit/{{factor._id}}" method="post">
+    <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" name="title" class="form-control" required value="{{factor.title}}">
+    </div>
+    <div class="form-group">
+        <label for="section">Section:</label>
+        <select name="section" class="form-control" required>
+            <option value="Individual Attributes">Individual Attributes</option> //check if equal to section
+            <option value="Life Factors">Life Factors</option>
+            <option value="Technology Factors">Technology Factors</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="lowresponse">Low Response:</label>
+        <textarea row="30" name="lowresponse" class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="mediumresponse">Medium Response:</label>
+        <textarea row="30" name="lowresponse" class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="highresponse">High Response:</label>
+        <textarea row="30" name="lowresponse" class="form-control" required></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button> <a class="btn btn-info" href="/manage/factors">Back</a> <a class="btn btn-danger factor-delete float-right" href="/manage/factors" data-factor-id="{{factor._id}}" >Delete</a>
+</form>
+<script>
+    $(document).ready(() => {
+    $('.factor-delete').on('click', (e) => {
+        $target = $(e.target);
+        $.ajax({
+            type: 'DELETE',
+            url: '/factors/delete/'+$target.attr('data-factor-id'),
+            success: (response) => {
+                alert('Factor Removed');
+                window.location.href = '/'
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
+</div>

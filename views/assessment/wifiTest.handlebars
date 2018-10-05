@@ -1,0 +1,49 @@
+<div id="assessmentIntroBackground">
+    <div id="imgOverlay">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1 style="text-align: left;">
+                        {{title}}</h1>
+                    <hr>
+                    <h4 class="card-title">Download Speed Test</h4>
+                    <p class="card-text">
+                        This test is to ensure that there will be not much problem loading webpages. Click the button below to start test. If your speed is above 15Mbps, you are in a good position in an online learning environment.
+                    </p>
+                    <br>
+                    <div align="center">
+                        <button id="button" class="btn-color" onclick="startWifiTest()">
+                            Test Wifi</button>
+                        <div align="center" class="mb-5">
+                            <div id="loaderText">
+                                <div id="loader">
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        <div style="display:none;" id="result" class="animate-result btn-color">
+                            <h2 id="resultH2">24</h2>
+                            <p>MBps</p>
+                        </div>
+                    </div>
+                    <br>
+
+
+                    <form action="/assessment/download-test" method="POST">
+                        <div class="progress" style="height: 20px">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-gold" role="progressbar" aria-valuenow="100"
+                                aria-valuemin="0" aria-valuemax="100" style="width: 100%">100%</div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <input type="text" value="" name="wifi" id="wifi" style="display:none">
+                            <button type="submit" class="btn btn-primary btn-color">Save and Continue</a>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<h1>{{title}}</h1>
+<hr>
+
+
+<form action="/questions/life-factors/add" method="post">
+    <div class="form-group">
+        <label for="factor">Factor:</label>
+        <select name="factor" class="form-control" required>
+            {{#each factors}}
+                <option value="{{title}}">{{title}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="text">Question Text:</label>
+        <input type="textarea" name="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="Option1">Option1:</label>
+        <input type="text" name="option1" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="Option2">Option2:</label>
+        <input type="text" name="option2" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="Option3">Option3:</label>
+        <input type="text" name="option3" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="Option4">Option4:</label>
+        <input type="text" name="option4" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="Option5">Option5:</label>
+        <input type="text" name="option5" class="form-control" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button> <a class="btn btn-danger" href="/manage/questions">Back</a>
+</form>
+

@@ -1,0 +1,52 @@
+<div class="container">
+
+
+<h1>{{title}}</h1>
+<hr>
+
+<form action="/questions/edit/{{question._id}}" method="post">
+    <div class="form-group">
+        <label for="section">Section:</label>
+        <select name="section" class="form-control" required >
+            <option value="Life Factors">Life Factors</option>
+            <option value="Individual Attributes">Individual Attributes</option>
+            <option value="Technology Factors">Technology Factors</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="factor">Factor:</label>
+        <select name="factor" class="form-control" required>
+            {{#each factors}}
+                <option value="{{title}}">{{title}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="description">Question Text:</label>
+        <input type="textarea" name="text" class="form-control" required value="{{question.text}}">
+    </div>
+    <div class="form-group">
+        <label for="Option1">Option1:</label>
+        <input type="text" name="option1" class="form-control" required value="{{question.answers.0.text}}">
+    </div>
+    <div class="form-group">
+        <label for="Option2">Option2:</label>
+        <input type="text" name="option2" class="form-control" required value="{{question.answers.1.text}}">
+    </div>
+    <div class="form-group">
+        <label for="Option3">Option3:</label>
+        <input type="text" name="option3" class="form-control" required value="{{question.answers.2.text}}">
+    </div>
+    <div class="form-group">
+        <label for="Option4">Option4:</label>
+        <input type="text" name="option4" class="form-control" required value="{{question.answers.3.text}}">
+    </div>
+    <div class="form-group">
+        <label for="Option5">Option5:</label>
+        <input type="text" name="option5" class="form-control" required value="{{question.answers.4.text}}">
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button> <a class="btn btn-danger" href="/manage/questions">Back</a><a class="btn btn-danger factor-delete float-right" href="/manage/factors" data-factor-id="{{factor._id}}" >Delete</a>
+</form>
+
+</div>
+

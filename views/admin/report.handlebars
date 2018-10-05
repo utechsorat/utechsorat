@@ -1,0 +1,186 @@
+<div id="assessmentBackground">
+    <div id="imgOverlay">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>{{title}}</h1>
+
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="col-md-4 mb-5">
+                                <canvas id="chart1"></canvas>
+                            </div>
+                            <div class="col-md-4 mb-5">
+                                <canvas id="chart2"></canvas>
+                            </div>
+                            <div class="col-md-4 mb-5">
+                                <canvas id="chart3"></canvas>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <canvas id="chart4"></canvas>
+                            </div>
+                            <div class="col-md-4">
+                                <canvas id="chart6"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <br> <br>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+    // country of nationality
+    new Chart(document.getElementById("chart1"), {
+        type: 'bar',
+        data: {
+            labels: {{{ nationality }}},
+        datasets: [
+            {
+                label: "Country of Nationality",
+                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                data: {{{ nationalityCount }}}
+        }
+        ]
+    },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Respondents' Country of Nationality"
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                       
+                        min: 0,
+                        
+                    }
+                }]
+            }
+        }
+});
+</script>
+
+<script>
+    new Chart(document.getElementById("chart2"), {
+        type: 'horizontalBar',
+        data: {
+            labels: {{{ residence }}},
+        datasets: [
+            {
+                label: "Country of Residence",
+                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                data: {{{ residenceCount }}}
+        }
+        ]
+    },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Respondents' Country of Residence"
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                       
+                        min: 0,
+                        
+                    }
+                }]
+            }
+        }
+});
+</script>
+
+
+
+<script>
+    new Chart(document.getElementById("chart3"), {
+        type: 'bar',
+        data: {
+            labels: {{{ age }}},
+        datasets: [
+            {
+                label: "Age Range",
+                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                data: {{{ ageCount }}}
+        }
+        ]
+    },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Respondents' Age Range"
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                       
+                        min: 0,
+                        
+                    }
+                }]
+            }
+        }
+});
+</script>
+
+<script>
+    new Chart(document.getElementById("chart4"), {
+        type: 'doughnut',
+        data: {
+            labels: {{{totalRespondents}}} ,
+        datasets: [
+            {
+                label: "Total Respondents",
+                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                data: {{{ totalRespondents }}}
+        }
+        ]
+    },
+        options: {
+            title: {
+                display: true,
+                text: "Total Respondents"
+            }
+        }
+});
+</script>
+
+
+
+
+<script>
+    new Chart(document.getElementById("chart6"), {
+        type: 'doughnut',
+        data: {
+            labels: {{{ gender }}},
+        datasets: [
+            {
+                label: "Gender",
+                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                data: {{{ genderCount }}}
+        }
+        ]
+    },
+        options: {
+            title: {
+                display: true,
+                text: "Respondents' Gender"
+            }
+        }
+});
+</script>

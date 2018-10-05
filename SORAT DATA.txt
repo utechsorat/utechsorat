@@ -1,0 +1,134 @@
+Individual Attributes Section
+
+Self Motivation
+
+db.questions.insert({text: "I regularly set goals and objectives before I start a task.", type: "Radio", section: "Individual Attributes", factor: "Self-Motivation", answers: [{text: "Strongly Agree", value: 5}, {text: "Agree", value: 4}, {text: "Neutral", value: 3}, {text: "Disagree", value: 2}, {text: "Strongly Disagree", value: 1}]});
+
+db.questions.insert({text: "I have a tendency to stress over reasons for not achieving my goals.", type: "Radio", section: "Individual Attributes", factor: "Self-Motivation", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+db.questions.insert({text: "I am confident in my abilities to achieve the goals I set for myself.", type: "Radio", section: "Individual Attributes", factor: "Self-Motivation", answers: [{text: "Strongly Agree", value: 5}, {text: "Agree", value: 4}, {text: "Neutral", value: 3}, {text: "Disagree", value: 2}, {text: "Strongly Disagree", value: 1}]});
+
+db.questions.insert({text: "I stress over due dates and completing assignments, which causes pressure and anxiety.", type: "Radio", section: "Individual Attributes", factor: "Self-Motivation", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+db.questions.insert({text: "When working on an assignment, I have a tendency to put forth my best efforts", type: "Radio", section: "Individual Attributes", factor: "Self-Motivation", answers: [{text: "Strongly Agree", value: 5}, {text: "Agree", value: 4}, {text: "Neutral", value: 3}, {text: "Disagree", value: 2}, {text: "Strongly Disagree", value: 1}]});
+
+db.questions.insert({text: "I have a tendency to do the minimum amount of work to get satisfactory results.", type: "Radio", section: "Individual Attributes", factor: "Self-Motivation", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+db.questions.insert({text: "I have a tendency to frequently focus on why I might not achieve my objectives.", type: "Radio", section: "Individual Attributes", factor: "Self-Motivation", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+
+Persistence
+
+db.questions.insert({text: "I am determined to stick to my studies despite challenging situations.", type: "Radio", section: "Individual Attributes", factor: "Persistence", answers: [{text: "Strongly Agree", value: 5}, {text: "Agree", value: 4}, {text: "Neutral", value: 3}, {text: "Disagree", value: 2}, {text: "Strongly Disagree", value: 1}]});
+
+db.questions.insert({text: "I always check my work before submitting to ensure that it is correct.", type: "Radio", section: "Individual Attributes", factor: "Persistence", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+db.questions.insert({text: "When I find a course/module too difficult to understand, I am likely to drop or withdraw from it.", type: "Radio", section: "Individual Attributes", factor: "Persistence", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+db.questions.insert({text: "I believe that if I work hard, I will be successful.", type: "Radio", section: "Individual Attributes", factor: "Persistence", answers: [{text: "Strongly Agree", value: 5}, {text: "Agree", value: 4}, {text: "Neutral", value: 3}, {text: "Disagree", value: 2}, {text: "Strongly Disagree", value: 1}]});
+
+Time Management
+
+db.questions.insert({text: "I plan and schedule my time on a regular basis.", type: "Radio", section: "Individual Attributes", factor: "Time Management", answers: [{text: "Strongly Agree", value: 5}, {text: "Agree", value: 4}, {text: "Neutral", value: 3}, {text: "Disagree", value: 2}, {text: "Strongly Disagree", value: 1}]});
+
+db.questions.insert({text: "I experience difficulty completing tasks on time.", type: "Radio", section: "Individual Attributes", factor: "Time Management", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+db.questions.insert({text: "I can sacrifice personal time to complete assignments.", type: "Radio", section: "Individual Attributes", factor: "Time Management", answers: [{text: "Strongly Agree", value: 5}, {text: "Agree", value: 4}, {text: "Neutral", value: 3}, {text: "Disagree", value: 2}, {text: "Strongly Disagree", value: 1}]});
+
+db.questions.insert({text: "I have a tendency to delay working on an assignment until it is almost due.", type: "Radio", section: "Individual Attributes", factor: "Time Management", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+db.questions.insert({text: "I complete assignments at the last minute or request extensions.", type: "Radio", section: "Individual Attributes", factor: "Time Management", answers: [{text: "Strongly Agree", value: 1}, {text: "Agree", value: 2}, {text: "Neutral", value: 3}, {text: "Disagree", value: 4}, {text: "Strongly Disagree", value: 5}]});
+
+Life Factors Section
+
+Availability
+
+db.questions.insert({text: "I am confident that my schedule is flexible enough to make up for occasionally lost time or unplanned important activities", type: "Radio", section: "Life Factors", factor: "Availability", answers: [{text: "Strongly Agree", value: 5}, {text: "Agree", value: 4}, {text: "Neutral", value: 3}, {text: "Disagree", value: 2}, {text: "Strongly Disagree", value: 1}]});
+
+db.questions.insert({text: "How many hours per week can you dedicate to online learning?", type: "Radio", section: "Life Factors", factor: "Availability", answers: [{text: "20 hours or more", value: 6}, {text: "15 - 19 hours", value: 5}, {text: "10 - 15 hours", value: 4}, {text: "7 - 10", value: 3}, {text: "4 - 6 hours", value: 2}, {text: "0 - 3 hours", value: 1}]});
+
+db.questions.insert({text: "How many hours per week do you dedicate to a part-time or full-time job?", type: "Radio", section: "Life Factors", factor: "Availability", answers: [{text: " 40 hours or more", value: 1}, {text: "31 - 40 hours", value: 2}, {text: "21 - 30 hours", value: 3}, {text: "7 - 10", value: 4}, {text: "11 - 20 hours", value: 5}, {text: "0 - 10 hours", value: 6}]});
+
+db.questions.insert({text: "How concerned are you about not having enough time to dedicate to online learning?", type: "Radio", section: "Individual Attributes", factor: "Life Factors", answers: [{text: " Not at all concerned", value: 5}, {text: "Slightly concerned ", value: 4}, {text: "Somewhat concerned", value: 3}, {text: "Moderately concerned", value: 2}, {text: "Extremely concerned", value: 1}]});
+
+Support
+
+db.questions.insert({text: "How anxious are you about the degree of support from your employer as it relates to online learning ?", type: "Radio", section: "Lifestyle Factors", factor: "Life Factors", answers: [{text: " I am very nervous about whether or not my employer will facilitate me doing online learning", value: 1}, {text: "I have no reason to be anxious", value: 3}, {text: "I'm uncertain as to how my employer will react", value: 2}, {text: "I'm not really anxious", value: 2}, {text: "I'm self-employed", value: 1}, {text: "I'm unemployed", value: 1}]});
+
+db.questions.insert({text: "How anxious are you about the degree of support from your friends and family as it relates to online learning?", type: "Radio", section: "Life Factors", factor: "Support", answers: [{text: "I am very nervous about whether or not my friends and family will facilitate me doing online learning", value: 1}, {text: "I’m uncertain as to how my friends and family will react.", value: 1}, {text: "I’m not really anxious", value: 2}, {text: "I have no reason to be anxious.", value: 3}]});
+
+db.questions.insert({text: "How do you feel about your financial ability to complete school?", type: "Radio", section: "Life Factors", factor: "Support", answers: [{text: "I’m confident that I can go through school without being concerned about my finances.", value: 3}, {text: "I’m uncertain as to whether or not I’m financially stable to complete school.", value: 2}, {text: "I’m uncertain as to whether or not I’m financially stable to complete school.", value: 1}]});
+
+
+Technical Factors Section
+
+Technical Knowledge
+
+db.questions.insert({text: "Which of the following is an example of a valid email address?", type: "Radio", section: "Technical Factors", factor: "Technical Knowledge", answers: [{text: "John Doe@gmail", value: 0}, {text: "Jane.Doe@gmail.com", value: 1}, {text: "JohnDoe.gmail.com 1", value: 0}, {text: "www.gmail.com", value: 0}]});
+
+db.questions.insert({text: "What is the purpose of a reply-all statement in emails?", type: "Radio", section: "Technical Factors", factor: "Technical Knowledge", answers: [{text: "Generates a reply message that will be sent to all recipients of the message.", value: 1}, {text: "Replies to only the person that sent the message.", value: 0}, {text: "This is not a function in emails.", value: 0}, {text: "It will send a reply message to all the contacts in your address book.", value: 0}]});
+
+db.questions.insert({text: "Which of the following devices is an input device?", type: "Radio", section: "Technical Factors", factor: "Technical Knowledge", answers: [{text: "Printer", value: 0}, {text: "Keyboard", value: 1}, {text: "Bluetooth speaker", value: 0}, {text: "USB Drive", value: 0}]});
+
+db.questions.insert({text: "Google is an example of a/an:", type: "Radio", section: "Technical Factors", factor: "Technical Knowledge", answers: [{text: "Search engine", value: 1}, {text: "Internet Explorer", value: 0}, {text: "The World Wide Web", value: 0}, {text: "Web browser", value: 0}]});
+
+db.questions.insert({text: "The acronym E-mail stands for:", type: "Radio", section: "Technical Factors", factor: "Technical Knowledge", answers: [{text: "Express", value: 0}, {text: "Electronic mail", value: 1}, {text: "Encrypted mail", value: 0}, {text: "Enterprise mail", value: 0}]});
+
+db.questions.insert({text: "Which of the following icons would you click on to undo changes in a word processing software:", type: "Radio", image: "/img/undo.png", section: "Technical Factors", factor: "Technical Knowledge", answers: [{text: "A", value: 0}, {text: "B", value: 1}, {text: "C", value: 0}, {text: "D", value: 0}]});
+
+db.questions.insert({text: "Identify the symbol that is popularly used for attaching files in an email.", type: "Radio", image: "/img/attachment.png", section: "Technical Factors", factor: "Technical Knowledge", answers: [{text: "A", value: 0}, {text: "B", value: 1}, {text: "C", value: 0}, {text: "D", value: 0}]});
+
+db.questions.insert({text: "What is this image associated with?", type: "Radio", image: "/img/wifi.png", section: "Technical Factors", factor: "Technical Knowledge", answers: [{text: "Power Button", value: 0}, {text: "Wi-Fi signal", value: 1}, {text: "Display", value: 0}, {text: "Bluetooth", value: 0}]});
+
+Technical Experience
+
+db.questions.insert({text: "How often do you use presentation tools such as (Microsoft PowerPoint, Prezi Slide etc.", type: "Radio",section: "Technical Factors", factor: "Technical Experience", answers: [{text: "Never.", value: 1}, {text: "Rarely.", value: 2}, {text: "Occasionally", value: 3}, {text: "A moderate amount.", value: 4}, {text: "A great deal.", value: 5} ]});
+
+db.questions.insert({text: "Which best describes how often you use word processing software?", type: "Radio",section: "Technical Factors", factor: "Technical Experience", answers: [{text: "Never.", value: 1}, {text: "Once per year.", value: 2}, {text: "Few times per year", value: 3}, {text: "Few times per month.", value: 4}, {text: "Every day / few times per week.", value: 5} ]});
+
+db.questions.insert({text: "How many of these activities you do online regularly? (1.Shopping Online 2.Using Social Networks 3.Playing Games 4.Banking Online 5.Listening/Downloading Music 6.Sending Emails", type: "Radio",section: "Technical Factors", factor: "Technical Experience", answers: [{text: "One", value: 1}, {text: "Two", value: 2}, {text: "Three", value: 3}, {text: "Four", value: 4}, {text: "Five", value: 5}, {text: "Five", value: 6} ]});
+
+db.questions.insert({text: "How knowledgeable are you about PDF files", type: "Radio",section: "Technical Factors", factor: "Technical Experience", answers: [{text: "I have no idea what PDF files are and I’ve never used them before.", value: 1}, {text: "I know how to convert word files to PDF.", value: 3}, {text: "I know advanced features such as applying signatures, adding notes and comments, highlighting etc.", value: 4}, {text: "I know the basic features such as opening and viewing them.", value: 2}]});
+
+
+Reading Skills Section
+
+db.questions.insert({text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", type: "Radio", section: "Reading Skills", factor: "Comprehension", answers: [{text: "A", value: 1}, {text: "B", value: 0}, {text: "Neutral", value: 0}, {text: "C", value: 0}, {text: "D Disagree", value: 0}]});
+
+db.questions.insert({text: "In what year did the persona visit the capital of America?", type: "Radio", section: "Reading Skills", factor: "Comprehension", answers: [{text: "2012", value: 0}, {text: "2014", value: 1}, {text: "2000", value: 0}, {text: "2018", value: 0}]});
+
+db.questions.insert({text: "The capital is home to _____.", type: "Radio", section: "Reading Skills", factor: "Comprehension", answers: [{text: "The dragons", value: 0}, {text: "The tallest mountain", value: 0}, {text: "Many landmarks", value: 1}, {text: "The tallest spotlight", value: 0}]});
+
+db.questions.insert({text: "Which state is the capital of the United States of America?", type: "Radio", section: "Reading Skills", factor: "Comprehension", answers: [{text: "New York", value: 0}, {text: "Indianna", value: 0}, {text: "Washington DC", value: 1}, {text: "Hollywood", value: 0}]});
+
+db.questions.insert({text: "Who/What was the capital of America named after?", type: "Radio", section: "Reading Skills", factor: "Comprehension", answers: [{text: "The 1st king of America", value: 0}, {text: "The sacred and national tree of America", value: 0}, {text: "The 1st president of America", value: 1}, {text: "The first inhabitants of America", value: 0}]});
+
+db.questions.insert({text: "In what season did the persona visit the capital of America?", type: "Radio", section: "Reading Skills", factor: "Comprehension", answers: [{text: "Winter", value: 0}, {text: "Summer", value: 1}, {text: "Autumn", value: 0}, {text: "Spring", value: 0}]});
+
+db.questions.insert({text: "Which was NOT mentioned in the passage?", type: "Radio", section: "Reading Skills", factor: "Comprehension", answers: [{text: "Water", value: 0}, {text: "Camera", value: 0}, {text: "Rain boots", value: 1}, {text: "Batteries", value: 0}]});
+
+
+Factors 
+
+db.factors.insert({title: "Time Management", section: "Individual Attributes", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 25, questionCount: 5, score: 0, lowResponse: "You get a low response for time management - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for time management - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for time management - Lorem ipsum dolor sit amet, consectetur adipiscing elit." })
+
+
+db.factors.insert({title: "Self-Motivation", section: "Individual Attributes", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 35, questionCount: 7, score: 0, lowResponse: "You get a low response for self motivation - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for self motivation - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for self motivation - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Persistence", section: "Individual Attributes", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 20, questionCount: 4, score: 0, lowResponse: "You get a low response for persistence - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for persistence - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for persistence - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Availability", section: "Life Factors", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 22, questionCount: 4, score: 0, lowResponse: "You get a low response for availability - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for availability - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for availability - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Support", section: "Life Factors", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 9, questionCount: 3, score: 0, lowResponse: "You get a low response for support - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for support - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for support - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Technical Knowledge", section: "Technical Factors", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 9, questionCount: 9, score: 0, lowResponse: "You get a low response for Technical knowledge - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for Technical knowledge - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for Technical knowledge - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Technical Experience", section: "Technical Factors", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 20, questionCount: 4, score: 0, lowResponse: "You get a low response for Technical experience - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for Technical experience - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for Technical experience - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Comprehension", section: "Reading Skills", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 6, questionCount: 6, score: 0, lowResponse: "You get a low response for reading comprehension - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for reading comprehension - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for reading comprehension - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Reading Speed", section: "Reading Skills", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 0, questionCount: 0, score: 0, lowResponse: "You get a low response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Typing Speed", section: "Typing Skills", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 0, questionCount: 0, score: 0, lowResponse: "You get a low response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
+
+db.factors.insert({title: "Download Speed", section: "Download Speed", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highestScore: 0, questionCount: 0, score: 0, lowResponse: "You get a low response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", mediumResponse: "You get a medium response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit.", highResponse: "You get a high response for reading speed - Lorem ipsum dolor sit amet, consectetur adipiscing elit."})
