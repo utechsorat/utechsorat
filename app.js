@@ -12,6 +12,9 @@ const db = require('./config/database');
 
 // load routes
 const users = require("./routes/users");
+const admin = require("./routes/admin");
+
+
 const assessment = require("./routes/assessment");
 const results = require("./routes/results");
 const questions = require("./routes/questions");
@@ -31,7 +34,7 @@ require("./config/passport")(passport);
 
 // mongoose middleware
 mongoose
-  .connect(db.mongoURI)
+  .connect(db.mongoURI, {useNewUrlParser: true})
   .then(() => console.log("MongoDB Connected..."))
   .catch(err => console.log(err));
 
@@ -80,13 +83,12 @@ app.get("/", (req, res) => {
   });
 });
 
-// admin route
-app.get("/admin", (req, res) => {
-  res.render("admin/dashboard");
-});
 
 // routes middleware
 app.use("/users", users);
+app.use("/admin", admin);
+
+
 app.use("/assessment", assessment);
 app.use("/results", results);
 app.use("/questions", questions);

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top {{#if user.admin}} {{else}} opacity {{/if}}"  id="navbar">
+<nav class="navbar navbar-expand-md navbar-light fixed-top"  id="navbar">
     <div class="container">
       <a href="/" class="navbar-brand"><img src="/img/utechlogo.png" alt="" width="85" height="85" class="img-fluid">
         <h3 class="d-inline align-middle">UTech SORAT</h3>
@@ -11,7 +11,7 @@
           </li>
           {{#if user.admin}}
             <li class="nav-item">
-            <a href="/admin" class="nav-link"><i class="fa fa-users"></i> Admin</a>
+            <a href="/admin/dashboard" class="nav-link"><i class="fa fa-users"></i> Admin</a>
           </li>
           {{/if}}
 

@@ -12,12 +12,7 @@ body {
   background-color: #fff;
   border-bottom: solid 5px $primary-color;
   outline: solid 3px $secondary-color;
-
   color: #333;
-
-  .opacity {
-    opacity: 0.9;
-  }
 
   .navbar-brand {
     font-size: 1.2em;
@@ -33,12 +28,10 @@ body {
     }
   }
 }
-
 // end of navbar
 
 // home
 #home {
-
   background:
     linear-gradient($primary-overlay, $primary-overlay),
     url('../img/loginBackground.jpg') no-repeat;
@@ -79,7 +72,6 @@ body {
     transform: translateY(-1px);
   }
 }
-
 // end of home
 
 // contact
@@ -96,7 +88,6 @@ body {
     opacity: 0.9;
   }
 }
-
 // end of contact
 
 // registration
@@ -116,27 +107,24 @@ body {
     opacity: 0.9;
   }
 }
-
 // end of registration
 
 // login
 #login {
-
-  .login-inner {
-    padding-top: 150px;
-  }
-
   background: linear-gradient($primary-overlay, $primary-overlay),
   url('../img/loginBackground.jpg') no-repeat;
   background-attachment: fixed;
   background-size: cover;
+
+  .login-inner {
+    padding-top: 150px;
+  }
 
   .login-form {
     border-radius: 0;
     opacity: 0.9;
   }
 }
-
 // end of login
 
 
@@ -144,7 +132,6 @@ body {
 #footer {
   border-top: solid 5px $primary-color;
 }
-
 // footer end
 
 
@@ -154,25 +141,21 @@ body {
     padding-top: 110px;
   }
 }
-
 // admin end
 
 // admin-sidebar
 #admin-sidebar {
-  position: fixed;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  
+  height:auto;
 
-  /* navbar */
   .sidebar {
-    height: 100vh;
     background: linear-gradient($primary-overlay, $primary-overlay), url(/img/loginBackground.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     box-shadow: 5px 7px 25px #999;
+    position:fixed;
+    height: 100vh;
+    z-index: 999;
   }
 
   .sidebar-link {
@@ -180,7 +163,8 @@ body {
   }
 
   .sidebar-link:hover {
-    background-color: rgba(14, 3, 77, 0.7);;
+    background-color: rgba(14, 3, 77, 0.7);
+    ;
     border-radius: 5px;
   }
 
@@ -197,17 +181,30 @@ body {
     box-shadow: 2px 5px 20px #111;
     transform: translateY(-1px);
   }
+}
+// end of admin sidebar
 
-  @media (max-width: 768px) {
+// admin dashboard cards
+
+.card-style {
+  box-shadow: 1px 2px 5px #999;
+  transition: .4s;
+}
+
+.card-style:hover {
+  box-shadow: 2px 3px 15px #999;
+  transform: translateY(-1px);
+}
+
+
+// end of admin dashboard cards
+
+@media (max-width: 768px) {
+  #admin-sidebar{
     .sidebar {
       position: static;
       height: auto;
     }
-
-    .top-navbar {
-      position: static;
-    }
   }
+  
 }
-
-/* end of navbar */

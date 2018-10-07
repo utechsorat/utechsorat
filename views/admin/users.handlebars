@@ -1,0 +1,73 @@
+<div id="admin">
+  <div class="admin-inner">
+    {{> _sidebar}}
+    <!-- table -->
+    <section>
+      <div class="container-fluid">
+        <div class="row my-sm-3">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row">
+              <div class="col-12">
+                <h3 class="text-muted mb-3">Users</h3>
+                <table class="table bg-light table-striped text-muted">
+                  <thead>
+                    <tr class="text-muted">
+                      <th>ID Number</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each users}}
+                    <tr>
+                      <td>{{_id}}</td>
+                      <td>{{firstname}}</td>
+                      <td>{{lastname}}</td>
+                      <td>{{email}}</td>
+                      <td><button class="btn btn-sm btn-info">Admin</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+
+                <!-- pagination -->
+                <nav>
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">
+                        <span>&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="page-item active">
+                      <a href="/admin/users/1" class="page-link py-2 px-3">
+                        1
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a href="/admin/users/2" class="page-link py-2 px-3">
+                        2
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a href="/admin/users/3" class="page-link py-2 px-3">
+                        3
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">
+                        <span>&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- end of pagination -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- table -->
