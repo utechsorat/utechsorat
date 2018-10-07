@@ -26,7 +26,7 @@ router.get("/users/:page", (req, res, next) => {
     .skip((perPage * page) - perPage)
     .limit(perPage)
     .exec(function(err, users){
-      User.count().exec(function(err, count){
+      User.countDocuments().exec(function(err, count){
         if(err){
           return next(err)
         }
