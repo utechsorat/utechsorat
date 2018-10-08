@@ -19,25 +19,63 @@ router.get("/dashboard", (req, res) => {
 
 // admin users route
 router.get("/users/:page", (req, res, next) => {
-  const perPage = 5;
-  const page = req.params.page || 1;
 
-  User.find({})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec(function(err, users){
-      User.countDocuments().exec(function(err, count){
-        if(err){
-          return next(err)
-        }
-        res.render("admin/users", {
-          usersActive: true,
-          users: users,
-          current: page,
-          pages: Math.ceil(count / perPage)
-        })
-      })
-    })
+  if (req.query.search) {
+    const perPage = 5;
+    const page = req.params.page || 1;
+    const query = {lastname: req.query.search} || {};
+    User.find(query)
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function (err, users) {
+        User.countDocuments(query).exec(function (err, count) {
+          if (err) {
+            return next(err)
+          }
+          const pageArray = [];
+          for (var i = 1; i <= Math.ceil(count / perPage); i++) {
+            pageArray.push(i);
+          }
+          res.render("admin/users", {
+            usersActive: true,
+            users: users,
+            current: Number(page),
+            current2: page,
+            pages: pageArray,
+            query: req.query.search
+          });
+        });
+      });
+
+  } else {
+    const perPage = 5;
+    const page = req.params.page || 1;
+    User.find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function (err, users) {
+        User.countDocuments().exec(function (err, count) {
+          if (err) {
+            return next(err)
+          }
+          const pageArray = [];
+          for (var i = 1; i <= Math.ceil(count / perPage); i++) {
+            pageArray.push(i);
+          }
+          res.render("admin/users", {
+            usersActive: true,
+            users: users,
+            current: Number(page),
+            current2: page,
+            pages: pageArray
+          });
+        });
+      });
+
+  }
+
+
+
 });
 
 // admin factors route
@@ -82,7 +120,34 @@ router.get("/documentation", (req, res) => {
   });
 });
 
+// delete user route
+router.delete('/delete/:id', (req, res) => {
+  User.remove({
+      _id: req.params.id
+    })
+    .then(() => {
+      res.redirect('back');
+    });
+});
+
+// admin priviledge route
+router.put('/edit/:id', (req, res) => {
+  User.findOne({
+      _id: req.params.id
+    })
+    .then(user => {
+      user.admin = !user.admin;
+
+      user.save()
+        .then(user => {
+          res.redirect('back');
+        })
+    })
+})
+
 router.get("/*", (req, res, next) => {
   res.redirect("/");
 });
+
+
 module.exports = router;

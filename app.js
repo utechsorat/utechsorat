@@ -1,11 +1,13 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const paginateHelper = require('express-handlebars-paginate');
 const path = require("path");
 const flash = require("connect-flash");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 
 // load database config
 const db = require('./config/database');
@@ -38,12 +40,29 @@ mongoose
   .then(() => console.log("MongoDB Connected..."))
   .catch(err => console.log(err));
 
+
 // express-handlebars middleware
 app.engine("handlebars", exphbs({
-    defaultLayout: "main"
-  })
+    defaultLayout: "main",
+    helpers: {
+      areEqual: function(num1, num2, options){
+        if(num1 === num2){
+          return options.fn(this);
+        } else {
+          return options.inverse(this);
+        }
+      },
+      paginateHelper: paginateHelper.createPagination
+  }
+  }, )
 );
+
 app.set("view engine", "handlebars");
+
+
+// method override middleware
+app.use(methodOverride('_method'));
+
 
 // body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
