@@ -6,6 +6,8 @@ function startReading() {
   document.getElementById("btnStart").style.display = "none";
   document.getElementById("readingPassage").style.textShadow = "0 0 0 #000";
   document.getElementById("btnStop").style.display = "block";
+  
+
 }
 function stopReading() {
   stopTime = new Date();

@@ -1,42 +1,65 @@
-<div id="assessmentBackground">
-  <div id="imgOverlay">
-    <div class="container">
-      <div class="card">
-        <div class="card-header">
-          <h1>{{title}}</h1>
-          <hr>
-          <p>
-            <h4>Read Instructions Carefully.</h4>
-            This section will test your reading speed. When you are ready to begin reading, click the "Start Reading" button to reveal
-            the reading passage. As soon as you are finished reading click the "Stop Reading" button. Do not try to speed
-            read, you will be given a comprehension test with a series of questions about the text you have just read. Have
-            fun!
-          </p>
-          <div id="btnStart">
-            <button class="btn btn-primary btn-color" onclick="startReading()">Start Reading </button>
-          </div>
+<div id="assessment">
+  <div class="assessment-inner">
 
-          <div id="blurPassage">
-            <p id="readingPassage">
-              {{passageP1}}
-              <br>
-              <br> {{passageP2}}
-            </p>
-          </div>
-          <button class="btn btn-primary btn-color" onclick="stopReading()" id="btnStop">Stop Reading </button>
-          <br />
-          <br />
-          <div class="progress" style="height: 20px">
-            <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-gold" role="progressbar" aria-valuenow="65"
-              aria-valuemin="0" aria-valuemax="100" style="width: 65%">65%</div>
-          </div>
 
-          <br>
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-8 mx-auto">
+
+            <div class="card text-dark mb-2">
+              <div class="card-body">
+                <h1>{{title}}</h1>
+                <hr>
+                <p>
+                  <h4>Read Instructions Carefully.</h4>
+                  This section will test your reading speed. When you are ready to begin reading, click the "Start
+                  Reading" button to reveal
+                  the reading passage. As soon as you are finished reading click the "Stop Reading" button. Do not try
+                  to speed
+                  read, you will be given a comprehension test with a series of questions about the text you have just
+                  read. Have
+                  fun!
+                </p>
+                <div class="container ">
+                  <div class="row ">
+                    <div class="col mx-auto">
+                      <div id="btnStart">
+                        <button class="btn btn-primary btn-color" onclick="startReading()">Start Reading </button>
+                      </div>
+
+                      <div id="blurPassage" class="d-flex p-2">
+                        <p id="readingPassage">
+                          {{passageP1}}
+                          <br>
+                          <br> {{passageP2}}
+                        </p>
+                      </div>
+                      <div class="col mx-auto">
+                        <button class="btn btn-primary btn-color" onclick="stopReading()" id="btnStop">Stop Reading
+                        </button>
+                      </div>
+
+                      <br />
+                      <br />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="progress" style="height: 20px">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-gold" role="progressbar"
+                    aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" style="width: 65%">65%</div>
+                </div>
+
+                <br>
+
+
+              </div>
+
+            </div>
+          </div>
         </div>
-
-
-      </div>
-    </div>
+    </section>
   </div>
-</div>
 </div>

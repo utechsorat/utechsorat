@@ -1,0 +1,96 @@
+<div id="admin">
+  <div class="admin-inner">
+    <!-- sidebar -->
+    {{> _sidebar}}
+    <!-- end of sidebar -->
+
+
+    <!-- table -->
+    <section>
+      <div class="container-fluid">
+        <div class="row my-sm-3">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row">
+              <div class="col mx-auto">
+
+                <form method="post" action="/admin/factor/add" class="mb-2 text-dark ">
+                  <h3 class="text-center">Add Factor</h3>
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" name="title" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="section">Section:</label>
+                        <select name="section" class="form-control" required>
+                          <option value="Individual Attributes">Individual Attributes</option>
+                          <option value="Life Factors">Life Factors</option>
+                          <option value="Technology Factors">Technology Factors</option>
+                        </select>
+                      </div>
+                      <div class="">
+                        <a class="btn btn-outline-danger" href="/admin/factors/1">Back</a>
+                        <input type="submit" class="btn btn-outline-success" value="Save">
+                      </div>
+                    </div>
+                    <div class="col">
+
+                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#low" role="tab"
+                            aria-controls="home" aria-selected="true">Low Response</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#medium" role="tab" aria-controls="profile"
+                            aria-selected="false">Medium Response</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#high" role="tab" aria-controls="contact"
+                            aria-selected="false">High Response</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="low" role="tabpanel" aria-labelledby="home-tab">
+                          <div class="form-group">
+                            <textarea class="ckeditor" id="lowresponse" name="lowresponse" required></textarea>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="medium" role="tabpanel" aria-labelledby="profile-tab">
+                          <div class="form-group">
+                            <textarea row="30" name="mediumresponse" class="form-control" required></textarea>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="high" role="tabpanel" aria-labelledby="contact-tab">
+                          <div class="form-group">
+                            <textarea row="30" name="highresponse" class="form-control" required></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+                  </div>
+
+
+
+
+                </form>
+
+
+
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

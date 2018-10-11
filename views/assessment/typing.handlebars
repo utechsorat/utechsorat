@@ -1,3 +1,69 @@
+<div id="assessment">
+    <div class="assessment-inner">
+
+
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-8 mx-auto">
+
+                        <div class="card text-dark mb-2">
+                            <div class="card-body">
+                                <h1>{{title}}</h1>
+                                <hr>
+                                <p>
+                                    Technology is the backbone of Online Learning, therefore students should possess
+                                    adequate technical skills. This section
+                                    assesses factors that include: {{#each factors}}
+                                    <span class="font-weight-bold">{{title}}</span>, {{/each}} etc.
+                                </p>
+
+                                <form action="/assessment/technology-factors" method="post">
+                                    {{#each questions}}
+                                    <div class="card bg-light mt-2">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <p>
+                                                    {{text}}
+                                                </p>
+                                                <img src="{{image}}" style="width: 50%;" alt="">
+                                            </div>
+                                            <div class="card-body">
+                                                {{#each answers}}
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" value="{{value}}" name="{{../_id}}"
+                                                            required> {{text}}
+                                                    </label>
+                                                </div>
+                                                {{/each}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                    <br>
+                                    <div class="progress" style="height: 20px">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-gold"
+                                            role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
+                                            style="width: 50%">50%</div>
+                                    </div>
+                                    <br>
+                                    <div class="text-center mb-2">
+                                        <button type="submit" class="btn btn-primary btn-color">Save and Continue</a>
+                                    </div>
+                                </form>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </div>
+</div>
+
+
 <div id="assessmentBackground">
     <div id="imgOverlay">
         <div class="container">

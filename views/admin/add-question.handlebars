@@ -1,0 +1,112 @@
+<div id="admin">
+  <div class="admin-inner">
+    <!-- sidebar -->
+    {{> _sidebar}}
+    <!-- end of sidebar -->
+
+
+    <!-- table -->
+    <section>
+      <div class="container-fluid">
+        <div class="row my-sm-3">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row">
+              <div class="col mx-auto">
+                <form method="post" action="/admin/question/add/" class="mb-2 text-dark ">
+                  <h3 class="text-center">Add Question</h3>
+                  <div class="row">
+                    <div class="col-8 mx-auto">
+                      <div class="form-group">
+                        <label for="text">Text:</label>
+                        <input type="text" name="text" class="form-control" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="section">Factor:</label>
+                        <select name="factor" class="form-control" required>
+                          {{#each factors}}
+                          <option value="{{title}}">{{title}}</option>
+                          {{/each}}
+
+                        </select> </div>
+
+                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt1" role="tab" aria-controls="home"
+                            aria-selected="true">Option 1</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt2" role="tab" aria-controls="home"
+                            aria-selected="true">Option 2</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt3" role="tab" aria-controls="home"
+                            aria-selected="true">Option 3</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt4" role="tab" aria-controls="home"
+                            aria-selected="true">Option 4</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt5" role="tab" aria-controls="home"
+                            aria-selected="true">Option 5</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade" id="Opt5" role="tabpanel" aria-labelledby="home-tab">
+                          <div class="form-group">
+                            <input type="text" class="form-control m-2" name="Opt5" placeholder="Strongly Agree">
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="Opt4" role="tabpanel" aria-labelledby="home-tab">
+                          <div class="form-group">
+                            <input type="text" class="form-control m-2" name="Opt4" placeholder="Agree">
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="Opt3" role="tabpanel" aria-labelledby="home-tab">
+                          <div class="form-group">
+                            <input type="text" class="form-control m-2" name="Opt3" placeholder="Neutral">
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="Opt2" role="tabpanel" aria-labelledby="home-tab">
+                          <div class="form-group">
+                            <input type="text" class="form-control m-2" name="Opt2" placeholder="Yes, Disagree" required>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade" id="Opt1" role="tabpanel" aria-labelledby="home-tab">
+                          <div class="form-group">
+                            <input type="text" class="form-control m-2" name="Opt1" placeholder="No, Strongly Disagree" required>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="mt-2">
+                        <a class="btn btn-outline-danger" href="/admin/questions/1">Back</a>
+                        <input type="submit" class="btn btn-outline-success" value="Save">
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+
+
+                </form>
+
+
+
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

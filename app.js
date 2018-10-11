@@ -1,6 +1,5 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
-const paginateHelper = require('express-handlebars-paginate');
 const path = require("path");
 const flash = require("connect-flash");
 const session = require("express-session");
@@ -52,7 +51,16 @@ app.engine("handlebars", exphbs({
           return options.inverse(this);
         }
       },
-      paginateHelper: paginateHelper.createPagination
+      inc: function(value, options){
+        return parseInt(value) + 1;
+      },
+      dec: function(value, options){
+        if (parseInt(value) === 1){
+          return parseInt(value);
+        } else {
+          return parseInt(value) - 1;
+        }
+      }
   }
   }, )
 );
@@ -61,7 +69,7 @@ app.set("view engine", "handlebars");
 
 
 // method override middleware
-app.use(methodOverride('_method'));
+app.use(methodOverride('_method'))
 
 
 // body parser middleware

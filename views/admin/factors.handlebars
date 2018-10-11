@@ -1,6 +1,8 @@
 <div id="admin">
   <div class="admin-inner">
+    <!-- sidebar -->
     {{> _sidebar}}
+    <!-- end of sidebar -->
 
 
     <!-- table -->
@@ -10,50 +12,29 @@
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row">
               <div class="col-12">
-                <h3 class="text-muted my-3">Factors</h3>
+                <form method="GET" action="/admin/factors/1" class="form-inline my-2">
+                  <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search by factor..."
+                    aria-label="Search">
+                  <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Search</button><a href="/admin/factor/add" class="btn text-white add-btn">Add Factor <i class="fas fa-plus-circle"></i></a>
+                </form>
                 <table class="table table-striped bg-light text-muted text-center">
                   <thead>
                     <tr class="text-muted">
-                      <th>Title</th>
-                      <th>Category</th>
+                      <th>Factor</th>
+                      <th>Section</th>
                       <th># of Questions</th>
-                      <th>Admin</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {{#each users}}
+                    {{#each factors}}
                     <tr>
-                      <td>{{firstname}}</td>
-                      <td>{{lastname}}</td>
-                      <td>{{email}}</td>
-                      <td><button class="btn btn-sm text-capitalize btn-block {{#if admin}} btn-success {{else}} btn-info {{/if}}"
-                          data-toggle="modal" data-target="#adm{{_id}}">{{admin}}</button></td>
+                      <td>{{title}}</td>
+                      <td>{{section}}</td>
+                      <td>{{questionCount}}</td>
+                      <td><a href="/admin/factor/edit/{{_id}}" class="btn btn-block btn-sm btn-info">Edit</a></td>
                       <td><button class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#del{{_id}}">Delete</button></td>
                     </tr>
-                    <!-- admin modal -->
-                    <div class="modal fade" id="adm{{_id}}">
-                      <div class="modal-dialog text-muted">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modal-title">Admin Priviledges</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          </div>
-                          <div class="modal-body">
-                            Are you sure you wish to change admin priviledges of {{firstname}} {{lastname}}?
-                          </div>
-                          <div class="modal-footer">
-                            <a class="btn btn-info btn-sm text-white" data-dismiss="modal">Cancel</a>
-                            <form action="/admin/edit/{{_id}}?_method=PUT" method="post">
-                              <input type="hidden" name="_method" value="PUT">
-                              <input type="submit" class="btn btn-danger btn-sm text-white" value="Continue">
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end of modal -->
-
                     <!-- delete modal -->
                     <div class="modal fade" id="del{{_id}}">
                       <div class="modal-dialog text-muted">
@@ -63,11 +44,12 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                           </div>
                           <div class="modal-body">
-                            Are you sure you wish to delete {{firstname}} {{lastname}}?
+                            Are you sure you wish to delete the {{title}} factor? All questions related to this factor
+                            will also be deleted.
                           </div>
                           <div class="modal-footer">
                             <a class="btn btn-info btn-sm text-white" data-dismiss="modal">Cancel</a>
-                            <form action="/admin/delete/{{_id}}?_method=DELETE" method="post">
+                            <form action="/admin/factors/delete/{{_id}}?_method=DELETE" method="post">
                               <input type="hidden" name="_method" value="DELETE">
                               <input type="submit" class="btn btn-danger btn-sm text-white" value="Delete">
                             </form>
@@ -80,27 +62,48 @@
                     {{/each}}
                   </tbody>
                 </table>
+                <!-- end of table -->
 
                 <!-- pagination -->
                 <nav>
                   <ul class="pagination justify-content-center">
+                    {{#if query}}
                     <li class="page-item">
-                      <a href="#" class="page-link py-2 px-3">
+                      <a href="/admin/factors/{{dec current}}?search={{query}}" class="page-link py-2 px-3">
                         <span>&laquo;</span>
                       </a>
                     </li>
                     {{#each pages}}
-                    <li class="page-item {{#areEqual this current}}active{{/areEqual}}">
-                      <a href="/admin/users/{{this}}" class="page-link py-2 px-3">
+                    <li class="page-item {{#areEqual this ../current}}active{{/areEqual}}">
+                      <a href="/admin/factors/{{this}}?search={{../query}}" class="page-link py-2 px-3">
                         {{this}}
                       </a>
                     </li>
                     {{/each}}
                     <li class="page-item">
-                      <a href="#" class="page-link py-2 px-3">
+                      <a href="/admin/factors/{{inc current}}?search={{query}}" class="page-link py-2 px-3">
                         <span>&raquo;</span>
                       </a>
                     </li>
+                    {{else}}
+                    <li class="page-item">
+                      <a href="/admin/factors/{{dec current}}" class="page-link py-2 px-3">
+                        <span>&laquo;</span>
+                      </a>
+                    </li>
+                    {{#each pages}}
+                    <li class="page-item {{#areEqual this ../current }} active{{/areEqual}}">
+                      <a href="/admin/factors/{{this}}" class="page-link py-2 px-3">
+                        {{this}}
+                      </a>
+                    </li>
+                    {{/each}}
+                    <li class="page-item">
+                      <a href="/admin/factors/{{inc current}}" class="page-link py-2 px-3">
+                        <span>&raquo;</span>
+                      </a>
+                    </li>
+                    {{/if}}
                   </ul>
                 </nav>
                 <!-- end of pagination -->
@@ -110,44 +113,6 @@
           </div>
         </div>
     </section>
-    <!-- end of table -->
 
-    <!-- modal -->
-    <div class="modal fade" id="priv">
-      <div class="modal-dialog text-muted">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Admin Priviledge</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-          <div class="modal-body">
-            Are you sure you wish to give this user admin priviledges?
-          </div>
-          <div class="modal-footer">
-            <a class="btn btn-info btn-sm text-white" data-dismiss="modal">Cancel</a>
-            <a class="btn btn-danger btn-sm text-white" data-dismiss="modal">Continue</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end of modal -->
-
-    <!-- modal -->
-    <div class="modal fade" id="delete">
-      <div class="modal-dialog text-muted">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Delete</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-          <div class="modal-body">
-            Are you sure you wish to delete this user?
-          </div>
-          <div class="modal-footer">
-            <a class="btn btn-info btn-sm text-white" data-dismiss="modal">Cancel</a>
-            <a class="btn btn-danger btn-sm text-white" data-dismiss="modal">Delete</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end of modal -->
+  </div>
+</div>
