@@ -6,6 +6,16 @@ const passport = require("passport");
 const {
   ensureAuthenticated
 } = require("../helpers/auth");
+const {
+  adminAuthenticated
+} = require("../helpers/auth");
+
+
+var passageP1 =
+  'Washington DC is the capital of the United States of America. Washington takes its name from the first president of America , George Washington. The "Columbia" in "District of Columbia" stands for ............. well there are many theories to why it was named "Columbia"( I just hope it had nothing to do with Christopher Columbus because I know he did not "discover" that area of land too ). The capital of the United States is home to over 10 memorials and landmarks that commemorate some astounding events in history. These exquisitely designed landmarks attract tourists from across the globe.'
+  
+
+var passageP2 =  "I visited Washington DC in the summer of 2014 and it was extremely hot, so if you are planning to visit stock up on bottles of water and some sunscreen. Areas near landmarks are only accessible by foot so comfortable shoes are a must. If you are adventurous like I am then you will want to visit most of the landmarks which is alot alot ALOT of walking lol, so some earphones and your favourite playlist will keep you energized and moving quickly.  What is a trip without pictures?? Selfie!!! Ensure you have a reliable camera and always have charged batteries or a powerbank."
 
 // user model
 const User = require("../models/User");
@@ -20,7 +30,7 @@ router.get("/dashboard", (req, res) => {
 });
 
 // users get route
-router.get("/users/:page", (req, res, next) => {
+router.get("/users/:page", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
 
   if (req.query.search) {
     const perPage = 5;
@@ -78,7 +88,7 @@ router.get("/users/:page", (req, res, next) => {
 });
 
 // users delete route
-router.delete('/users/delete/:id', (req, res) => {
+router.delete('/users/delete/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   User.deleteOne({
       _id: req.params.id
     })
@@ -88,7 +98,7 @@ router.delete('/users/delete/:id', (req, res) => {
 });
 
 // users priviledge put route
-router.put('/users/edit/:id', (req, res) => {
+router.put('/users/edit/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   User.findOne({
       _id: req.params.id
     })
@@ -110,7 +120,7 @@ router.put('/users/edit/:id', (req, res) => {
 
 
 // factors get route
-router.get("/factors/:page", (req, res, next) => {
+router.get("/factors/:page", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
 
   if (req.query.search) {
     const perPage = 5;
@@ -167,16 +177,17 @@ router.get("/factors/:page", (req, res, next) => {
 });
 
 // add factor get route
-router.get('/factor/add', (req, res) => {
+router.get('/factor/add', (req, res, next) => {
   res.render("admin/add-factor", {
     factorsActive: true
   });
 });
 
 // add factor post route
-router.post('/factor/add', (req, res) => {
+router.post('/factor/add', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   let factor = new Factor();
-  factor.title = req.body.title;
+  factor._id = mongoose.Types.ObjectId(),
+    factor.title = req.body.title;
   factor.section = req.body.section;
   factor.lowResponse = req.body.lowresponse;
   factor.mediumResponse = req.body.mediumresponse;
@@ -189,7 +200,7 @@ router.post('/factor/add', (req, res) => {
 })
 
 // edit factor get route
-router.get('/factor/edit/:id', (req, res) => {
+router.get('/factor/edit/:id', (req, res, next) => {
   Factor.findOne({
       _id: req.params.id
     })
@@ -202,7 +213,7 @@ router.get('/factor/edit/:id', (req, res) => {
 });
 
 // edit factor put route
-router.put('/factor/edit/:id', (req, res) => {
+router.put('/factor/edit/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   Factor.findOne({
       _id: req.params.id
     })
@@ -221,7 +232,7 @@ router.put('/factor/edit/:id', (req, res) => {
 })
 
 // factor delete route
-router.delete('/factors/delete/:id', (req, res) => {
+router.delete('/factors/delete/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   const id = req.params.id;
 
   Factor.findOne({
@@ -245,7 +256,7 @@ router.delete('/factors/delete/:id', (req, res) => {
 
 
 // questions get route
-router.get("/questions/:page", (req, res, next) => {
+router.get("/questions/:page", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
 
   if (req.query.search) {
     const perPage = 5;
@@ -306,7 +317,7 @@ router.get("/questions/:page", (req, res, next) => {
 });
 
 // add question get route
-router.get('/question/add', (req, res) => {
+router.get('/question/add', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   Factor.find({})
     .then(factors => {
       res.render("admin/add-question", {
@@ -317,17 +328,18 @@ router.get('/question/add', (req, res) => {
 });
 
 // add question post route
-router.post('/question/add', (req, res) => {
+router.post('/question/add', (req, res, next) => {
   let maxValue = 2;
   Factor.findOne({
       title: req.body.factor
     })
     .then(factor => {
       let question = new Question();
-      question.text = req.body.text;
+      question._id = mongoose.Types.ObjectId(),
+        question.text = req.body.text;
       question.factor = factor._id;
       question.section = factor.section;
-      
+
       const options = [{
           name: "Opt1",
           text: req.body.Opt1,
@@ -337,10 +349,11 @@ router.post('/question/add', (req, res) => {
           name: "Opt2",
           text: req.body.Opt2,
           value: 2
-        }];
+        }
+      ];
 
-      if (req.body.Opt3){
-        options.push( {
+      if (req.body.Opt3) {
+        options.push({
           name: "Opt3",
           text: req.body.Opt3,
           value: 3
@@ -348,8 +361,8 @@ router.post('/question/add', (req, res) => {
         maxValue = 3;
       }
 
-      if (req.body.Opt4){
-        options.push( {
+      if (req.body.Opt4) {
+        options.push({
           name: "Opt4",
           text: req.body.Opt4,
           value: 4
@@ -357,15 +370,15 @@ router.post('/question/add', (req, res) => {
         maxValue = 4;
       }
 
-      if (req.body.Opt5){
-        options.push( {
+      if (req.body.Opt5) {
+        options.push({
           name: "Opt5",
           text: req.body.Opt5,
           value: 5
         });
         maxValue = 5;
       }
-      
+
       question.answers = options;
       question.maxValue = maxValue;
 
@@ -384,7 +397,7 @@ router.post('/question/add', (req, res) => {
 });
 
 // edit question get route
-router.get('/question/edit/:id', (req, res) => {
+router.get('/question/edit/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   Question.findOne({
       _id: req.params.id
     })
@@ -402,7 +415,7 @@ router.get('/question/edit/:id', (req, res) => {
 });
 
 // edit question put route
-router.put('/question/edit/:id', (req, res) => {
+router.put('/question/edit/:id', (req, res, next) => {
   let maxValue = 2;
   Question.findOne({
       _id: req.params.id
@@ -416,46 +429,47 @@ router.put('/question/edit/:id', (req, res) => {
           question.factor = factor._id;
           question.section = factor.section;
           const options = [{
-            name: "Opt1",
-            text: req.body.Opt1,
-            value: 1
-          },
-          {
-            name: "Opt2",
-            text: req.body.Opt2,
-            value: 2
-          }];
-  
-        if (req.body.Opt3){
-          options.push( {
-            name: "Opt3",
-            text: req.body.Opt3,
-            value: 3
-          });
-          maxValue = 3;
-        }
-  
-        if (req.body.Opt4){
-          options.push( {
-            name: "Opt4",
-            text: req.body.Opt4,
-            value: 4
-          });
-          maxValue = 4;
-        }
-  
-        if (req.body.Opt5){
-          options.push( {
-            name: "Opt5",
-            text: req.body.Opt5,
-            value: 4
-          });
-          maxValue = 5;
-        }
-        
-        question.answers = options
-        question.maxValue = maxValue;
-  
+              name: "Opt1",
+              text: req.body.Opt1,
+              value: 1
+            },
+            {
+              name: "Opt2",
+              text: req.body.Opt2,
+              value: 2
+            }
+          ];
+
+          if (req.body.Opt3) {
+            options.push({
+              name: "Opt3",
+              text: req.body.Opt3,
+              value: 3
+            });
+            maxValue = 3;
+          }
+
+          if (req.body.Opt4) {
+            options.push({
+              name: "Opt4",
+              text: req.body.Opt4,
+              value: 4
+            });
+            maxValue = 4;
+          }
+
+          if (req.body.Opt5) {
+            options.push({
+              name: "Opt5",
+              text: req.body.Opt5,
+              value: 4
+            });
+            maxValue = 5;
+          }
+
+          question.answers = options
+          question.maxValue = maxValue;
+
 
 
           question.save()
@@ -467,7 +481,7 @@ router.put('/question/edit/:id', (req, res) => {
 });
 
 // factor delete route
-router.delete('/questions/delete/:id', (req, res) => {
+router.delete('/questions/delete/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   const id = req.params.id;
 
   Question.findOne({
@@ -502,28 +516,136 @@ router.delete('/questions/delete/:id', (req, res) => {
 
 
 // admin previews route
-router.get("/preview", (req, res) => {
-  res.render("admin/preview", {
+router.get("/preview/introduction", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  res.render("preview/assessment", {
     preview: true
   });
 });
 
+router.get("/preview/personal-information", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  res.render("preview/personal-information", {
+    preview: true
+  });
+});
+
+router.get("/preview/individual-attributes", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  Question.find({
+      section: "Individual Attributes"
+    })
+    .then(question => {
+      Factor.find({
+          section: "Individual Attributes"
+        })
+        .then(factors => {
+          res.render("preview/individual-attributes", {
+            title: "Individual Attributes",
+            questions: question,
+            factors: factors,
+            preview: true
+          });
+        });
+    });
+});
+
+router.get("/preview/life-factors", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  Question.find({
+      section: "Life Factors"
+    })
+    .then(question => {
+      Factor.find({
+          section: "Life Factors"
+        })
+        .then(factors => {
+          res.render("preview/life-factors", {
+            title: "Life Factors",
+            questions: question,
+            factors: factors,
+            preview: true
+          });
+        });
+    });
+});
+
+router.get("/preview/technology-factors", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  Question.find({
+      section: "Technical Factors"
+    })
+    .then(question => {
+      Factor.find({
+          section: "Technical Factors"
+        })
+        .then(factors => {
+          res.render("preview/technology-factors", {
+            title: "Technical Factors",
+            questions: question,
+            factors: factors,
+            preview: true
+          });
+        });
+    });
+});
+
+router.get("/preview/reading", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  res.render("preview/reading-passage", {
+    title: "Reading Skills",
+    passageP1: passageP1,
+    passageP2: passageP2,
+    preview: true
+  });
+});
+
+router.get("/preview/typing", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  res.render("preview/typing", {
+    title: "Typing Skills",
+    preview: true
+  });
+});
+
+router.get("/preview/wifi", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  res.render("preview/wifiTest", {
+    title: "Download Speed",
+    preview: true
+  });
+});
+
+router.get("/preview/reading-questions", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  Question.find({ section: "Reading Skills" }).then(question => {
+    res.render("preview/reading-questions", {
+      title: "Reading Skills",
+      questions: question
+    });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // admin results route
-router.get("/results", (req, res) => {
+router.get("/results", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("admin/results", {
     results: true
   });
 });
 
 // admin settings route
-router.get("/settings", (req, res) => {
+router.get("/settings", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("admin/settings", {
     setting: true
   });
 });
 
 // admin settings route
-router.get("/documentation", (req, res) => {
+router.get("/documentation", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("admin/documentation", {
     documentation: true
   });

@@ -42,8 +42,10 @@ body {
   #home .assessment-btn:hover {
     background-color: #f66436;
     border-radius: 7px;
-    box-shadow: 2px 5px 20px #111;
+    box-shadow: 2px 5px 20px #be5d5d;
     transform: translateY(-1px); }
+  #home .assessment-btn:visited {
+    color: #fff; }
 
 #contact {
   background: linear-gradient(rgba(14, 3, 77, 0.4), rgba(14, 3, 77, 0.4)), url("../img/loginBackground.jpg") no-repeat;

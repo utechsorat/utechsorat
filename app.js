@@ -18,10 +18,7 @@ const admin = require("./routes/admin");
 
 const assessment = require("./routes/assessment");
 const results = require("./routes/results");
-const questions = require("./routes/questions");
-const factors = require("./routes/factors");
-const categories = require("./routes/categories");
-const manage = require("./routes/manage");
+
 const report = require("./routes/report");
 
 const port = process.env.PORT || 3000;  
@@ -118,10 +115,7 @@ app.use("/admin", admin);
 
 app.use("/assessment", assessment);
 app.use("/results", results);
-app.use("/questions", questions);
-app.use("/factors", factors);
-app.use("/categories", categories);
-app.use("/manage", manage);
+
 app.use("/report", report);
 
 // invalid routes

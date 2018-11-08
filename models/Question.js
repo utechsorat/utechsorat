@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // question schema
 const QuestionSchema = new Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+      },
     section: {
         type: String,
         required: true

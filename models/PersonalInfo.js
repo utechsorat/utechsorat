@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // personal info schema
 const PersonalInfoSchema = new Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     gender: {
         type: String
     },
@@ -21,7 +25,7 @@ const PersonalInfoSchema = new Schema({
     interest: {
         type: String,
     },
-    disability:{
+    disability: {
         type: String
     },
     user: {
@@ -33,14 +37,14 @@ const PersonalInfoSchema = new Schema({
 const PersonalInfo = module.exports = mongoose.model('PersonalInfo', PersonalInfoSchema, 'personalInfo');
 
 // add result
-module.exports.addPersonalInfo = function(personalInfo, callback){
+module.exports.addPersonalInfo = function (personalInfo, callback) {
     PersonalInfo.create(personalInfo, callback);
 }
 
-module.exports.removePersonalInfo = function(query, callback){
+module.exports.removePersonalInfo = function (query, callback) {
     PersonalInfo.findOneAndRemove(query, callback);
 }
 
-module.exports.getPersonalInfo = function(callback){
+module.exports.getPersonalInfo = function (callback) {
     PersonalInfo.find(callback);
 }

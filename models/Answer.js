@@ -3,10 +3,14 @@ const Schema = mongoose.Schema;
 
 // answer schema
 const AnswerSchema = new Schema({
-    text:{
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    text: {
         type: String,
     },
-    value:{
+    value: {
         type: Number,
     },
     question: {
