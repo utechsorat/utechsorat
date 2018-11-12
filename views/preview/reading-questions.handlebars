@@ -13,6 +13,7 @@
 
                         <div id="assessment">
                             <div class="mt-5">
+                                {{> _preview-nav}}
 
 
                                 <section>
@@ -30,7 +31,7 @@
                                                                 following questions below.</b>
                                                         </p>
 
-                                                        <form action="/assessment/reading-questions" method="post">
+                                                        <form action="#">
                                                             {{#each questions}}
                                                             <div class="card bg-light mt-2 {{factor}}">
                                                                 <div class="card">

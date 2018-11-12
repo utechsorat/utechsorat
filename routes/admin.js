@@ -518,13 +518,16 @@ router.delete('/questions/delete/:id', ensureAuthenticated, adminAuthenticated, 
 // admin previews route
 router.get("/preview/introduction", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("preview/assessment", {
-    preview: true
+    preview: true,
+    introductionActive: true
   });
 });
 
 router.get("/preview/personal-information", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("preview/personal-information", {
-    preview: true
+    title: "Personal Information",
+    preview: true,
+    personalInfoActive: true
   });
 });
 
@@ -541,7 +544,8 @@ router.get("/preview/individual-attributes", ensureAuthenticated, adminAuthentic
             title: "Individual Attributes",
             questions: question,
             factors: factors,
-            preview: true
+            preview: true,
+            individualAttrActive: true
           });
         });
     });
@@ -560,7 +564,8 @@ router.get("/preview/life-factors", ensureAuthenticated, adminAuthenticated, (re
             title: "Life Factors",
             questions: question,
             factors: factors,
-            preview: true
+            preview: true,
+            lifeFactorsActive: true
           });
         });
     });
@@ -579,7 +584,8 @@ router.get("/preview/technology-factors", ensureAuthenticated, adminAuthenticate
             title: "Technical Factors",
             questions: question,
             factors: factors,
-            preview: true
+            preview: true,
+            technologyFactorsActive: true
           });
         });
     });
@@ -590,21 +596,24 @@ router.get("/preview/reading", ensureAuthenticated, adminAuthenticated, (req, re
     title: "Reading Skills",
     passageP1: passageP1,
     passageP2: passageP2,
-    preview: true
+    preview: true,
+    readingPassageActive: true
   });
 });
 
 router.get("/preview/typing", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("preview/typing", {
     title: "Typing Skills",
-    preview: true
+    preview: true,
+    typingActive: true
   });
 });
 
 router.get("/preview/wifi", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("preview/wifiTest", {
     title: "Download Speed",
-    preview: true
+    preview: true,
+    wifiActive: true
   });
 });
 
@@ -612,7 +621,8 @@ router.get("/preview/reading-questions", ensureAuthenticated, adminAuthenticated
   Question.find({ section: "Reading Skills" }).then(question => {
     res.render("preview/reading-questions", {
       title: "Reading Skills",
-      questions: question
+      questions: question,
+      comprehsionActive: true
     });
   });
 });

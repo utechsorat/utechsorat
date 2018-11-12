@@ -11,6 +11,9 @@
 
                         <div id="assessment">
                             <div class="mt-5">
+
+                                {{> _preview-nav}}
+
                                 <section>
                                     <div class="container-fluid">
                                         <div class="row">
@@ -64,7 +67,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <span>
-                                                                        <form action="/assessment/typing" method="POST">
+                                                                        <form action="#">
                                                                             <input name="wpm" id="wpm" value="" />
                                                                             <button type="submit" id="nextBtn" class="btn btn-primary mt-5 btn-color"
                                                                                 disabled>Save and Continue</button>

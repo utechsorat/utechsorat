@@ -1,25 +1,32 @@
 <div class="container mb-2">
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <p class="text-danger">The following pages are only a preview of the assessment; therefore the features are not functional. To preview the functionality and the results, complete the assessment as an admin</p>
+  <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link" id="introduction-tab" data-toggle="tab" href="/admin/preview/individual-attributes" role="tab" aria-controls="home" aria-selected="true">Option
-        1</a>
+      <a class="nav-link {{#if introductionActive}}active{{else}} {{/if}}" href="/admin/preview/introduction">Introduction</a>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link {{#if personalInfoActive}}active{{else}} {{/if}}" href="/admin/preview/personal-information">Personal Information</a>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link {{#if individualAttrActive}}active{{else}} {{/if}}" href="/admin/preview/individual-attributes">Individual Attributes</a>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link {{#if lifeFactorsActive}}active{{else}} {{/if}}" href="/admin/preview/life-factors">Life Factors</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt2" role="tab" aria-controls="home" aria-selected="true">Option
-        2</a>
+      <a class="nav-link {{#if technologyFactorsActive}}active{{else}} {{/if}}" href="/admin/preview/technology-factors">Technical Factors</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt3" role="tab" aria-controls="home" aria-selected="true">Option
-        3</a>
+      <a class="nav-link {{#if readingPassageActive}}active{{else}} {{/if}}" href="/admin/preview/reading">Reading Passage</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt4" role="tab" aria-controls="home" aria-selected="true">Option
-        4</a>
+      <a class="nav-link {{#if comprehsionActive}}active{{else}} {{/if}}" href="/admin/preview/reading-questions">Reading Comprehension</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt5" role="tab" aria-controls="home" aria-selected="true">Option
-        5</a>
+      <a class="nav-link {{#if typingActive}}active{{else}} {{/if}}" href="/admin/preview/typing">Typing</a>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link {{#if wifiActive}}active{{else}} {{/if}}" href="/admin/preview/wifi">Wifi</a>
     </li>
   </ul>
-
 </div>
