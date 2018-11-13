@@ -4,7 +4,9 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
-const { ensureAuthenticated } = require("../helpers/auth");
+const {
+  ensureAuthenticated
+} = require("../helpers/auth");
 
 // models
 const Question = require("../models/Question");
@@ -17,15 +19,17 @@ const PersonalInfo = require("../models/PersonalInfo");
 //variables
 var passageP1 =
   'Washington DC is the capital of the United States of America. Washington takes its name from the first president of America , George Washington. The "Columbia" in "District of Columbia" stands for ............. well there are many theories to why it was named "Columbia"( I just hope it had nothing to do with Christopher Columbus because I know he did not "discover" that area of land too ). The capital of the United States is home to over 10 memorials and landmarks that commemorate some astounding events in history. These exquisitely designed landmarks attract tourists from across the globe.'
-  
 
-var passageP2 =  "I visited Washington DC in the summer of 2014 and it was extremely hot, so if you are planning to visit stock up on bottles of water and some sunscreen. Areas near landmarks are only accessible by foot so comfortable shoes are a must. If you are adventurous like I am then you will want to visit most of the landmarks which is alot alot ALOT of walking lol, so some earphones and your favourite playlist will keep you energized and moving quickly.  What is a trip without pictures?? Selfie!!! Ensure you have a reliable camera and always have charged batteries or a powerbank."
+
+var passageP2 = "I visited Washington DC in the summer of 2014 and it was extremely hot, so if you are planning to visit stock up on bottles of water and some sunscreen. Areas near landmarks are only accessible by foot so comfortable shoes are a must. If you are adventurous like I am then you will want to visit most of the landmarks which is alot alot ALOT of walking lol, so some earphones and your favourite playlist will keep you energized and moving quickly.  What is a trip without pictures?? Selfie!!! Ensure you have a reliable camera and always have charged batteries or a powerbank."
 
 
 
 // assessment begining route (get)
 router.get("/", ensureAuthenticated, (req, res, next) => {
-  User.findOne({ _id: req.user._id }).then(user => {
+  User.findOne({
+    _id: req.user._id
+  }).then(user => {
     res.render("assessment/assessment", {
       title: "Assessment",
       section: user.section
@@ -43,12 +47,15 @@ router.get("/personal-information", ensureAuthenticated, (req, res, next) => {
 // personal infomation route (post)
 router.post("/personal-information", ensureAuthenticated, (req, res, next) => {
   // if these personal information are already present delete them to prevent duplicates
-  const query = { user: req.user._id };
-  PersonalInfo.removePersonalInfo(query, (err, personalInfo) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+
+  PersonalInfo.findOneAndDelete({
+      user: req.user._id
+    })
+    .exec()
+    .then()
+    .catch(err => {
+      console.log(err)
+    });
 
   //
   var disability = req.body.disability;
@@ -57,6 +64,7 @@ router.post("/personal-information", ensureAuthenticated, (req, res, next) => {
   }
 
   const personalInfo = new PersonalInfo({
+    _id: mongoose.Types.ObjectId(),
     gender: req.body.gender,
     age: req.body.age,
     nationality: req.body.nationality,
@@ -67,264 +75,358 @@ router.post("/personal-information", ensureAuthenticated, (req, res, next) => {
     user: req.user._id
   });
 
-  PersonalInfo.addPersonalInfo(personalInfo, (err, personalInfo) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+  personalInfo.save()
+    .then()
+    .catch(err => {
+      console.log(err);
+    });
 
-  const query2 = { _id: req.user._id };
-  const update = { section: "individual-attributes" };
-  User.updateSection(query2, update, {}, (err, user) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+  User.updateOne({
+      _id: req.user._id
+    }, {
+      $set: {
+        section: "individual-attributes"
+      }
+    })
+    .exec()
+    .then()
+    .catch(err => {
+      console.log(err);
+    })
   res.redirect("/assessment/individual-attributes");
 });
 
 // individual attributes route (get)
-router.get("/individual-attributes",ensureAuthenticated, (req, res, next) => {
-  Question.find({ section: "Individual Attributes" }).then(question => {
-    Factor.find({ section: "Individual Attributes" }).then(factors => {
-      res.render("assessment/individual-attributes", {
-        title: "Individual Attributes",
-        questions: question,
-        factors: factors
-      });
+router.get("/individual-attributes", ensureAuthenticated, (req, res, next) => {
+  Question.find({
+      section: "Individual Attributes"
+    })
+    .exec()
+    .then(question => {
+      Factor.find({
+          section: "Individual Attributes"
+        })
+        .then(factors => {
+          res.render("assessment/individual-attributes", {
+            title: "Individual Attributes",
+            questions: question,
+            factors: factors
+          });
+        });
     });
-  });
 });
 
 // individual attributes route (post)
 router.post("/individual-attributes", ensureAuthenticated, (req, res, next) => {
-  Question.getQuestions((err, questions) => {
-    if (err) {
-      res.send(err);
-    }
-
-    // get factors for individual attributes from database
-    const query = {
-      section: "Individual Attributes",
-      questionCount: { $gt: 0 }
-    };
-    Factor.getFactorBySection(query, (err, factors) => {
-      for (var i = 0; i < questions.length; i++) {
-        var questionName = questions[i]._id;
-        for (var j = 0; j < factors.length; j++) {
-          if (questions[i].factor == factors[j].title) {
-            factors[j].score =
-              factors[j].score + Number(req.body[questionName]);
-          }
-        }
-      }
-
-      for (var i = 0; i < factors.length; i++) {
-        var value = Math.ceil(factors[i].score / factors[i].highestScore * 100);
-        var response = "response error";
-        if (value >= 0 && value <= 49) {
-          response = factors[i].lowResponse;
-        } else if (value >= 50 && value <= 79) {
-          response = factors[i].mediumResponse;
-        } else if (value >= 80 && value <= 100) {
-          response = factors[i].highResponse;
-        } else {
-          response = "no response";
-        }
-
-        const result = new Result({
+  Question.find({})
+    .populate('factor', 'title')
+    .exec()
+    .then(questions => {
+      Factor.find({
           section: "Individual Attributes",
-          factor: factors[i].title,
-          value: value,
-          response: response,
-          user: req.user._id
-        });
-
-        // if these results are already present delete them to prevent duplicates
-        const query = { section: "Individual Attributes", user: req.user._id };
-        Result.removeResult(query, (err, results) => {
-          if (err) {
-            res.send(err);
+          questionCount: {
+            $gt: 0
           }
-        });
-
-        Result.addResult(result, (err, result) => {
-          if (err) {
-            res.send(err);
+        })
+        .then(factors => {
+          for (var i = 0; i < questions.length; i++) {
+            var questionName = questions[i]._id;
+            for (var j = 0; j < factors.length; j++) {
+              if (questions[i].factor.title == factors[j].title) {
+                factors[j].score =
+                  factors[j].score + Number(req.body[questionName]);
+              }
+            }
           }
+
+          for (var i = 0; i < factors.length; i++) {
+            var value = Math.ceil(factors[i].score / factors[i].highestScore * 100);
+            var response = "response error";
+            if (value >= 0 && value <= 49) {
+              response = factors[i].lowResponse;
+            } else if (value >= 50 && value <= 79) {
+              response = factors[i].mediumResponse;
+            } else if (value >= 80 && value <= 100) {
+              response = factors[i].highResponse;
+            } else {
+              response = "no response";
+            }
+
+            const result = new Result({
+              _id: mongoose.Types.ObjectId(),
+              section: "Individual Attributes",
+              factor: factors[i].title,
+              value: value,
+              response: response,
+              user: req.user._id
+            });
+
+            // if these results are already present delete them to prevent duplicates
+            const query = {
+              section: "Individual Attributes",
+              user: req.user._id
+            };
+            Result.findOneAndDelete(query)
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+
+            result.save()
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+
+          }
+        })
+        .catch(err => {
+          console.log(err)
         });
-      }
+    })
+    .catch(err => {
+      console.log(err)
     });
-  });
 
-  const query = { _id: req.user._id };
-  const update = { section: "life-factors" };
-  User.updateSection(query, update, {}, (err, user) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+
+  User.updateOne({
+      _id: req.user._id
+    }, {
+      $set: {
+        section: "life-factors"
+      }
+    })
+    .then()
+    .catch(err => {
+      console.log(err);
+    })
+
   res.redirect("/assessment/life-factors");
 });
 
 // life factors route (get)
 router.get("/life-factors", ensureAuthenticated, (req, res, next) => {
-  Question.find({ section: "Life Factors" }).then(question => {
-    Factor.find({ section: "Life Factors" }).then(factors => {
-      res.render("assessment/life-factors", {
-        title: "Life Factors",
-        questions: question,
-        factors: factors
-      });
+  Question.find({
+      section: "Life Factors"
+    })
+    .exec()
+    .then(question => {
+      Factor.find({
+          section: "Life Factors"
+        })
+        .then(factors => {
+          res.render("assessment/life-factors", {
+            title: "Life Factors",
+            questions: question,
+            factors: factors
+          });
+        });
     });
-  });
 });
 
+
 // life factors route (post)
-router.post("/life-factors",ensureAuthenticated, (req, res, next) => {
-  Question.getQuestions((err, questions) => {
-    if (err) {
-      res.send(err);
-    }
-
-    // get factors for life factors from database
-    const query = { section: "Life Factors", questionCount: { $gt: 0 } };
-    Factor.getFactorBySection(query, (err, factors) => {
-      for (var i = 0; i < questions.length; i++) {
-        var questionName = questions[i]._id;
-        for (var j = 0; j < factors.length; j++) {
-          if (questions[i].factor == factors[j].title) {
-            factors[j].score =
-              factors[j].score + Number(req.body[questionName]);
-          }
-        }
-      }
-
-      for (var i = 0; i < factors.length; i++) {
-        var value = Math.ceil(factors[i].score / factors[i].highestScore * 100);
-        var response = "response error";
-        if (value >= 0 && value <= 49) {
-          response = factors[i].lowResponse;
-        } else if (value >= 50 && value <= 79) {
-          response = factors[i].mediumResponse;
-        } else if (value >= 80 && value <= 100) {
-          response = factors[i].highResponse;
-        } else {
-          response = "no response";
-        }
-        const result = new Result({
+router.post("/life-factors", ensureAuthenticated, (req, res, next) => {
+  Question.find({})
+    .populate('factor', 'title')
+    .exec()
+    .then(questions => {
+      Factor.find({
           section: "Life Factors",
-          factor: factors[i].title,
-          response: response,
-          value: value,
-          user: req.user._id
-        });
-
-        const query = { section: "Life Factors", user: req.user._id };
-        Result.removeResult(query, (err, results) => {
-          if (err) {
-            res.send(err);
+          questionCount: {
+            $gt: 0
           }
-        });
-
-        Result.addResult(result, (err, result) => {
-          if (err) {
-            res.send(err);
+        })
+        .then(factors => {
+          for (var i = 0; i < questions.length; i++) {
+            var questionName = questions[i]._id;
+            for (var j = 0; j < factors.length; j++) {
+              if (questions[i].factor.title == factors[j].title) {
+                factors[j].score =
+                  factors[j].score + Number(req.body[questionName]);
+              }
+            }
           }
+
+          for (var i = 0; i < factors.length; i++) {
+            var value = Math.ceil(factors[i].score / factors[i].highestScore * 100);
+            var response = "response error";
+            if (value >= 0 && value <= 49) {
+              response = factors[i].lowResponse;
+            } else if (value >= 50 && value <= 79) {
+              response = factors[i].mediumResponse;
+            } else if (value >= 80 && value <= 100) {
+              response = factors[i].highResponse;
+            } else {
+              response = "no response";
+            }
+
+            const result = new Result({
+              _id: mongoose.Types.ObjectId(),
+              section: "Life Factors",
+              factor: factors[i].title,
+              value: value,
+              response: response,
+              user: req.user._id
+            });
+
+            // if these results are already present delete them to prevent duplicates
+            const query = {
+              section: "Life Factors",
+              user: req.user._id
+            };
+            Result.findOneAndDelete(query)
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+
+            result.save()
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+
+          }
+        })
+        .catch(err => {
+          console.log(err)
         });
-      }
+    })
+    .catch(err => {
+      console.log(err)
     });
-  });
-  const query = { _id: req.user._id };
-  const update = { section: "technology-factors" };
-  User.updateSection(query, update, {}, (err, user) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+
+
+  User.updateOne({
+      _id: req.user._id
+    }, {
+      $set: {
+        section: "technology-factors"
+      }
+    })
+    .then()
+    .catch(err => {
+      console.log(err);
+    })
+
   res.redirect("/assessment/technology-factors");
 });
 
+
 // technology factors route (get)
 router.get("/technology-factors", ensureAuthenticated, (req, res, next) => {
-  Question.find({ section: "Technical Factors" }).then(question => {
-    Factor.find({ section: "Technical Factors" }).then(factors => {
-      res.render("assessment/technology-factors", {
-        title: "Technical Factors",
-        questions: question,
-        factors: factors
-      });
+  Question.find({
+      section: "Technical Factors"
+    })
+    .exec()
+    .then(question => {
+      Factor.find({
+          section: "Technical Factors"
+        })
+        .then(factors => {
+          res.render("assessment/technology-factors", {
+            title: "Technical Factors",
+            questions: question,
+            factors: factors
+          });
+        });
     });
-  });
 });
+
+
+
 
 // technology factors route (post)
-router.post("/technology-factors",ensureAuthenticated, (req, res, next) => {
-  Question.getQuestions((err, questions) => {
-    if (err) {
-      res.send(err);
-    }
-
-    // get factors for technology factors from database
-    const query = { section: "Technical Factors", questionCount: { $gt: 0 } };
-    Factor.getFactorBySection(query, (err, factors) => {
-      for (var i = 0; i < questions.length; i++) {
-        var questionName = questions[i]._id;
-        for (var j = 0; j < factors.length; j++) {
-          if (questions[i].factor == factors[j].title) {
-            factors[j].score =
-              factors[j].score + Number(req.body[questionName]);
-          }
-        }
-      }
-
-      for (var i = 0; i < factors.length; i++) {
-        var value = Math.ceil(factors[i].score / factors[i].highestScore * 100);
-        var response = "response error";
-        if (value >= 0 && value <= 49) {
-          response = factors[i].lowResponse;
-        } else if (value >= 50 && value <= 79) {
-          response = factors[i].mediumResponse;
-        } else if (value >= 80 && value <= 100) {
-          response = factors[i].highResponse;
-        } else {
-          response = "no response";
-        }
-
-        const result = new Result({
+router.post("/technology-factors", ensureAuthenticated, (req, res, next) => {
+  Question.find({})
+    .populate('factor', 'title')
+    .exec()
+    .then(questions => {
+      Factor.find({
           section: "Technical Factors",
-          factor: factors[i].title,
-          value: value,
-          response: response,
-          user: req.user._id
-        });
-
-        // if these results are already present delete them to prevent duplicates
-        const query = { section: "Technical Factors", user: req.user._id };
-        Result.removeResult(query, (err, results) => {
-          if (err) {
-            res.send(err);
+          questionCount: {
+            $gt: 0
           }
-        });
-
-        Result.addResult(result, (err, result) => {
-          if (err) {
-            res.send(err);
+        })
+        .then(factors => {
+          for (var i = 0; i < questions.length; i++) {
+            var questionName = questions[i]._id;
+            for (var j = 0; j < factors.length; j++) {
+              if (questions[i].factor.title == factors[j].title) {
+                factors[j].score =
+                  factors[j].score + Number(req.body[questionName]);
+              }
+            }
           }
-        });
-      }
-      const query = { _id: req.user._id };
-      const update = { section: "reading" };
-      User.updateSection(query, update, {}, (err, user) => {
-        if (err) {
-          res.send(err);
-        }
-      });
 
-      res.redirect("/assessment/reading");
+          for (var i = 0; i < factors.length; i++) {
+            var value = Math.ceil(factors[i].score / factors[i].highestScore * 100);
+            var response = "response error";
+            if (value >= 0 && value <= 49) {
+              response = factors[i].lowResponse;
+            } else if (value >= 50 && value <= 79) {
+              response = factors[i].mediumResponse;
+            } else if (value >= 80 && value <= 100) {
+              response = factors[i].highResponse;
+            } else {
+              response = "no response";
+            }
+
+            const result = new Result({
+              _id: mongoose.Types.ObjectId(),
+              section: "Technical Factors",
+              factor: factors[i].title,
+              value: value,
+              response: response,
+              user: req.user._id
+            });
+
+            // if these results are already present delete them to prevent duplicates
+            const query = {
+              section: "Technical Factors",
+              user: req.user._id
+            };
+            Result.findOneAndDelete(query)
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+
+            result.save()
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        });
+    })
+    .catch(err => {
+      console.log(err)
     });
-  });
+
+
+  User.updateOne({
+      _id: req.user._id
+    }, {
+      $set: {
+        section: "reading"
+      }
+    })
+    .then()
+    .catch(err => {
+      console.log(err);
+    })
+
+  res.redirect("/assessment/reading");
 });
+
+
+
 
 // reading route (get)
 router.get("/reading", ensureAuthenticated, (req, res, next) => {
@@ -344,14 +446,19 @@ router.get("/complete", ensureAuthenticated, (req, res, next) => {
 
 // restart assessment route (get)
 router.get("/restart", ensureAuthenticated, (req, res, next) => {
-  const query = { _id: req.user._id };
-  const update = { section: "personal-information" };
-  User.updateSection(query, update, {}, (err, user) => {
-    if (err) {
-      res.send(err);
-    }
-  });
-  res.redirect("/assessment/personal-information");
+  User.updateOne({
+      _id: req.user._id
+    }, {
+      $set: {
+        section: "personal-information"
+      }
+    })
+    .then(() => {
+      res.redirect("/assessment/personal-information");
+    })
+    .catch(err => {
+      console.log(err);
+    })
 });
 
 router.get(
@@ -360,62 +467,85 @@ router.get(
   (req, res, next) => {
     readingTime = req.params.time / 7490;
     var perMinute = readingTime / 60;
-    var passage = passageP1+passageP2;
+    var passage = passageP1 + passageP2;
     var wordCount = passage.split(" ").length;
     var wpm = Math.ceil(wordCount / perMinute);
     var value = wpm;
-    
+
 
     // get factors for reading and comprehension from database
     const query = {
       title: "Reading Speed"
     };
-    Factor.getFactorBySection(query,  (err, factors) => {
-      for (var i = 0; i < factors.length; i++) {
-        var response = "response error";
-        if (value >= 0 && value <= 99) {
-          response = factors[i].lowResponse;
-        } else if (value >= 100 && value <= 199) {
-          response = factors[i].mediumResponse;
-        } else if (value >= 200 && value <= 1000) {
-          response = factors[i].highResponse;
-        } else {
-          response = "no response";
+
+    Factor.find({
+        title: "Reading Speed"
+      })
+      .then(factors => {
+        for (var i = 0; i < factors.length; i++) {
+          var response = "response error";
+          if (value >= 0 && value <= 99) {
+            response = factors[i].lowResponse;
+          } else if (value >= 100 && value <= 199) {
+            response = factors[i].mediumResponse;
+          } else if (value >= 200 && value <= 1000) {
+            response = factors[i].highResponse;
+          } else {
+            response = "no response";
+          }
         }
-      }
 
-      const result = new Result({
-        section: "Reading Skills",
-        factor: "Reading Speed",
-        value: wpm,
-        response: response,
-        user: req.user._id
-      });
+        const result = new Result({
+          _id: mongoose.Types.ObjectId(),
+          section: "Reading Skills",
+          factor: "Reading Speed",
+          value: wpm,
+          response: response,
+          user: req.user._id
+        });
 
-      // if these results are already present delete them to prevent duplicates
-      const query = { factor: "Reading Speed", user: req.user._id };
-      Result.removeResult(query, (err, results) => {
-        if (err) {
-          res.send(err);
+        // if these results are already present delete them to prevent duplicates
+        const query = {
+          factor: "Reading Speed",
+          user: req.user._id
+        };
+        Result.findOneAndDelete(query)
+          .then()
+          .catch(err => {
+            console.log(err);
+          });
+
+        result.save()
+          .then()
+          .catch(err => {
+            console.log(err);
+          })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+    const query1 = {
+      _id: req.user._id
+    };
+    const update = {
+      section: "reading"
+    };
+    User.updateOne({
+        _id: req.user._id
+      }, {
+        $set: {
+          section: "reading"
         }
-      });
+      })
+      .then()
+      .catch(err => {
+        console.log(err);
+      })
 
-      Result.addResult(result, (err, result) => {
-        if (err) {
-          res.send(err);
-        }
-      });
-    });
-
-    const query1 = { _id: req.user._id };
-    const update = { section: "reading" };
-    User.updateSection(query1, update, {}, (err, user) => {
-      if (err) {
-        res.send(err);
-      }
-    });
-
-    Question.find({ section: "Reading Skills" }).then(question => {
+    Question.find({
+      section: "Reading Skills"
+    }).then(question => {
       res.render("assessment/reading-questions", {
         title: "Reading Skills",
         questions: question
@@ -426,72 +556,94 @@ router.get(
 
 // reading questions route (post)
 router.post("/reading-questions", ensureAuthenticated, (req, res, next) => {
-  Question.getQuestions((err, questions) => {
-    if (err) {
-      res.send(err);
-    }
 
-    // get factors for reading and comprehension from database
-    const query = {
-      title: "Comprehension",
-      questionCount: { $gt: 0 }
-    };
-    Factor.getFactorBySection(query, (err, factors) => {
-      for (var i = 0; i < questions.length; i++) {
-        var questionName = questions[i]._id;
-        for (var j = 0; j < factors.length; j++) {
-          if (questions[i].factor == factors[j].title) {
-            factors[j].score =
-              factors[j].score + Number(req.body[questionName]);
+  Question.find({})
+    .populate('factor', 'title')
+    .exec()
+    .then(questions => {
+      Factor.find({
+          section: "Comprehension",
+          questionCount: {
+            $gt: 0
           }
-        }
+        })
+        .then(factors => {
+          for (var i = 0; i < questions.length; i++) {
+            var questionName = questions[i]._id;
+            for (var j = 0; j < factors.length; j++) {
+              if (questions[i].factor.title == factors[j].title) {
+                factors[j].score =
+                  factors[j].score + Number(req.body[questionName]);
+              }
+            }
+          }
+
+          for (var i = 0; i < factors.length; i++) {
+            var value = Math.ceil(factors[i].score / factors[i].highestScore * 100);
+            var response = "response error";
+            if (value >= 0 && value <= 49) {
+              response = factors[i].lowResponse;
+            } else if (value >= 50 && value <= 79) {
+              response = factors[i].mediumResponse;
+            } else if (value >= 80 && value <= 100) {
+              response = factors[i].highResponse;
+            } else {
+              response = "no response";
+            }
+
+            const result = new Result({
+              _id: mongoose.Types.ObjectId(),
+              section: "Reading Skills",
+              factor: factors[i].title,
+              value: value,
+              response: response,
+              user: req.user._id
+            });
+
+            // if these results are already present delete them to prevent duplicates
+            const query = {
+              section: "Comprehension",
+              user: req.user._id
+            };
+            Result.findOneAndDelete(query)
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+
+            result.save()
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        });
+
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+
+
+  User.updateOne({
+      _id: req.user._id
+    }, {
+      $set: {
+        section: "typing"
       }
+    })
+    .then()
+    .catch(err => {
+      console.log(err);
+    })
 
-      // create the result
-      for (var i = 0; i < factors.length; i++) {
-        var value = Math.ceil(factors[i].score / factors[i].highestScore * 100);
-        var response = "response error";
-        if (value >= 0 && value <= 49) {
-          response = factors[i].lowResponse;
-        } else if (value >= 50 && value <= 79) {
-          response = factors[i].mediumResponse;
-        } else if (value >= 80 && value <= 100) {
-          response = factors[i].highResponse;
-        } else {
-          response = "no response";
-        }
-        const result = new Result({
-          section: "Reading Skills",
-          factor: factors[i].title,
-          value: value,
-          response: response,
-          user: req.user._id
-        });
-
-        // if these results are already present delete them to prevent duplicates
-        const query = { factor: "Comprehension", user: req.user._id };
-        Result.removeResult(query, (err, results) => {
-          if (err) {
-            res.send(err);
-          }
-        });
-
-        Result.addResult(result, (err, result) => {
-          if (err) {
-            res.send(err);
-          }
-        });
-      }
-    });
-  });
-  const query = { _id: req.user._id };
-  const update = { section: "typing" };
-  User.updateSection(query, update, {}, (err, user) => {
-    if (err) {
-      res.send(err);
-    }
-  });
   res.redirect("/assessment/typing");
+
 });
 
 // typing route (get)
@@ -524,26 +676,34 @@ router.post("/typing", ensureAuthenticated, (req, res, next) => {
   });
 
   // if these results are already present delete them to prevent duplicates
-  const query = { factor: "Typing Speed", user: req.user._id };
-  Result.removeResult(query, (err, results) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+  const query = {
+    factor: "Typing Speed",
+    user: req.user._id
+  };
 
-  Result.addResult(result, (err, result) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+  Result.findOneAndDelete(query)
+    .then()
+    .catch(err => {
+      console.log(err);
+    });
 
-  const query1 = { _id: req.user._id };
-  const update = { section: "downloadTest" };
-  User.updateSection(query1, update, {}, (err, user) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+  result.save()
+    .then()
+    .catch(err => {
+      console.log(err);
+    });
+
+  const query1 = {
+    _id: req.user._id
+  };
+  const update = {
+    section: "downloadTest"
+  };
+  User.updateSection(query1, update)
+    .then()
+    .catch(err => {
+      console.log(err);
+    })
   res.redirect("/assessment/downloadTest");
 });
 
@@ -578,26 +738,33 @@ router.post("/download-test", ensureAuthenticated, (req, res, next) => {
   });
 
   // if these results are already present delete them to prevent duplicates
-  const query = { factor: "Download Speed", user: req.user._id };
-  Result.removeResult(query, (err, results) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+  const query = {
+    factor: "Download Speed",
+    user: req.user._id
+  };
+  Result.findOneAndDelete(query)
+    .then()
+    .catch(err => {
+      console.log(err);
+    });
 
-  Result.addResult(result, (err, result) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+  result.save()
+    .then()
+    .catch(err => {
+      console.log(err);
+    });
 
-  const query2 = { _id: req.user._id };
-  const update = { section: "complete" };
-  User.updateSection(query2, update, {}, (err, user) => {
-    if (err) {
-      res.send(err);
-    }
-  });
+  const query2 = {
+    _id: req.user._id
+  };
+  const update = {
+    section: "complete"
+  };
+  User.updateOne(query2, update)
+  .then()
+  .catch(err => {
+    console.log(err);
+  })
   res.redirect("/assessment/complete");
 });
 

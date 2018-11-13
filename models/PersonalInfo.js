@@ -34,7 +34,7 @@ const PersonalInfoSchema = new Schema({
     }
 });
 
-const PersonalInfo = module.exports = mongoose.model('PersonalInfo', PersonalInfoSchema, 'personalInfo');
+const PersonalInfo = module.exports = mongoose.model('PersonalInfo', PersonalInfoSchema);
 
 // add result
 module.exports.addPersonalInfo = function (personalInfo, callback) {

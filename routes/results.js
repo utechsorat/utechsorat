@@ -26,7 +26,8 @@ router.get("/introduction", ensureAuthenticated, (req, res) => {
         title: "Introduction",
         results: resultJSON,
         resultString: resultString,
-        user: user
+        user: user,
+
       });
     });
   });
@@ -47,7 +48,8 @@ router.get("/summary", ensureAuthenticated, (req, res) => {
         title: "Summary",
         results: resultJSON,
         resultString: resultString,
-        user: user
+        user: user,
+        summaryActive: true
       });
     });
   });
@@ -70,7 +72,8 @@ router.get("/life-factors", ensureAuthenticated, (req, res) => {
       res.render("results/life-factors-results", {
         title: "Life Factors",
         results: resultJSON,
-        resultString: resultString
+        resultString: resultString,
+        lifeFactorsActive: true
       });
     });
   });
@@ -93,7 +96,8 @@ router.get("/individual-attributes", ensureAuthenticated, (req, res) => {
       res.render("results/attributes-results", {
         title: "Individual Attributes",
         results: resultJSON,
-        resultString: resultString
+        resultString: resultString,
+        individualAttrActive: true
       });
     });
   });
@@ -116,7 +120,8 @@ router.get("/reading", ensureAuthenticated, (req, res) => {
       res.render("results/reading-results", {
         title: "Reading Skills",
         results: resultJSON,
-        resultString: resultString
+        resultString: resultString,
+        readingActive: true
       });
     });
   });
@@ -139,7 +144,8 @@ router.get("/technology-factors", ensureAuthenticated, (req, res) => {
       res.render("results/technology-factors-results", {
         title: "Technical Factors",
         results: resultJSON,
-        resultString: resultString
+        resultString: resultString,
+        technologyFactorsActive: true
       });
     });
   });
@@ -159,7 +165,8 @@ router.get("/typing", ensureAuthenticated, (req, res) => {
       res.render("results/typing-results", {
         title: "Typing Skills",
         results: resultJSON,
-        resultString: resultString
+        resultString: resultString,
+        typingActive: true
       });
     });
   });

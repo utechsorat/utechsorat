@@ -1,0 +1,27 @@
+ <!-- navbar -->
+    <nav class="navbar navbar-expand-md navbar-light p-0" id="admin-sidebar">
+      <div class="contianer">
+        <button class="navbar-toggler mr-auto mt-3 mb-2 ml-2 bg-light" type="button" data-toggle="collapse" data-target="#sidebarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      </div>
+      <div class="collapse navbar-collapse" id="sidebarNav">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- sidebar -->
+            <div class="col-xl-2 col-lg-3 col-md-4 sidebar">
+              <ul class="navbar-nav flex-column mt-4">
+                <li class="nav-item"><a href="/results/summary" class="nav-link text-white p-2 mb-2 {{#if summaryActive}} current {{else}} sidebar-link{{/if}}"><i class="fas fa-clipboard-list text-light fa-lg mr-3"></i>Summary</a>
+                <li class="nav-item"><a href="/results/individual-attributes" class="nav-link text-white p-2 mb-2 {{#if individualAttrActive}} current {{else}} sidebar-link{{/if}}"><i class="fas fa-male text-light fa-lg mr-3"></i>Individual Attributes</a></li>
+                <li class="nav-item"><a href="/results/life-factors" class="nav-link text-white p-2 mb-2 {{#if lifeFactorsActive}} current {{else}} sidebar-link{{/if}}"><i class="fas fa-heartbeat text-light fa-lg mr-3"></i>Life Factors</a></li>
+                <li class="nav-item"><a href="/results/technology-factors" class="nav-link text-white p-2 mb-2 {{#if technologyFactorsActive}} current {{else}} sidebar-link{{/if}}"><i class="fas fa-laptop text-light fa-lg mr-3"></i>Technical Factors</a></li>
+                <li class="nav-item"><a href="/results/reading" class="nav-link text-white p-2 mb-2 {{#if readingActive}} current {{else}} sidebar-link{{/if}}"><i class="fas fa-book-open text-light fa-lg mr-3"></i>Reading Skills</a></li>
+                <li class="nav-item"><a href="/results/typing" class="nav-link text-white p-2 mb-2 {{#if typingActive}} current {{else}} sidebar-link{{/if}}"><i class="fas fa-keyboard text-light fa-lg mr-3"></i>Typing Skills</a></li>
+              </ul>
+            </div>
+            <!-- end of sidebar -->
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- end of navbar -->
