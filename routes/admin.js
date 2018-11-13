@@ -13,9 +13,9 @@ const {
 
 var passageP1 =
   'Washington DC is the capital of the United States of America. Washington takes its name from the first president of America , George Washington. The "Columbia" in "District of Columbia" stands for ............. well there are many theories to why it was named "Columbia"( I just hope it had nothing to do with Christopher Columbus because I know he did not "discover" that area of land too ). The capital of the United States is home to over 10 memorials and landmarks that commemorate some astounding events in history. These exquisitely designed landmarks attract tourists from across the globe.'
-  
 
-var passageP2 =  "I visited Washington DC in the summer of 2014 and it was extremely hot, so if you are planning to visit stock up on bottles of water and some sunscreen. Areas near landmarks are only accessible by foot so comfortable shoes are a must. If you are adventurous like I am then you will want to visit most of the landmarks which is alot alot ALOT of walking lol, so some earphones and your favourite playlist will keep you energized and moving quickly.  What is a trip without pictures?? Selfie!!! Ensure you have a reliable camera and always have charged batteries or a powerbank."
+
+var passageP2 = "I visited Washington DC in the summer of 2014 and it was extremely hot, so if you are planning to visit stock up on bottles of water and some sunscreen. Areas near landmarks are only accessible by foot so comfortable shoes are a must. If you are adventurous like I am then you will want to visit most of the landmarks which is alot alot ALOT of walking lol, so some earphones and your favourite playlist will keep you energized and moving quickly.  What is a trip without pictures?? Selfie!!! Ensure you have a reliable camera and always have charged batteries or a powerbank."
 
 // user model
 const User = require("../models/User");
@@ -329,54 +329,57 @@ router.get('/question/add', ensureAuthenticated, adminAuthenticated, (req, res, 
 
 // add question post route
 router.post('/question/add', (req, res, next) => {
-  let maxValue = 2;
+  let maxValue;
   Factor.findOne({
       title: req.body.factor
     })
     .then(factor => {
       let question = new Question();
-      question._id = mongoose.Types.ObjectId(),
-        question.text = req.body.text;
+      question._id = mongoose.Types.ObjectId();
+      question.text = req.body.text;
       question.factor = factor._id;
       question.section = factor.section;
+
 
       const options = [{
           name: "Opt1",
           text: req.body.Opt1,
-          value: 1
+          value: Number(req.body.Opt1Value)
         },
         {
           name: "Opt2",
           text: req.body.Opt2,
-          value: 2
+          value: Number(req.body.Opt2Value)
         }
       ];
+
+      maxValue = Number(req.body.Opt1Value) + Number(req.body.Opt2Value);
 
       if (req.body.Opt3) {
         options.push({
           name: "Opt3",
           text: req.body.Opt3,
-          value: 3
+          value: Number(req.body.Opt3Value)
         });
-        maxValue = 3;
+        maxValue = maxValue + Number(req.body.Opt3Value);
       }
 
       if (req.body.Opt4) {
         options.push({
           name: "Opt4",
           text: req.body.Opt4,
-          value: 4
+          value: Number(req.body.Opt4Value)
         });
-        maxValue = 4;
+        maxValue = maxValue + Number(req.body.Opt4Value);
       }
 
       if (req.body.Opt5) {
         options.push({
           name: "Opt5",
           text: req.body.Opt5,
-          value: 5
+          value: Number(req.body.Opt5Value)
         });
-        maxValue = 5;
+        maxValue = maxValue + Number(req.body.Opt5Value);
       }
 
       question.answers = options;
@@ -409,6 +412,7 @@ router.get('/question/edit/:id', ensureAuthenticated, adminAuthenticated, (req, 
             questionsActive: true,
             question: question,
             factors: factors
+
           });
         });
     });
@@ -416,11 +420,13 @@ router.get('/question/edit/:id', ensureAuthenticated, adminAuthenticated, (req, 
 
 // edit question put route
 router.put('/question/edit/:id', (req, res, next) => {
-  let maxValue = 2;
+  let maxValue;
+  let previousMaxValue;
   Question.findOne({
       _id: req.params.id
     })
     .then(question => {
+      previousMaxValue = question.maxValue
       Factor.findOne({
           title: req.body.factor
         })
@@ -428,43 +434,47 @@ router.put('/question/edit/:id', (req, res, next) => {
           question.text = req.body.text;
           question.factor = factor._id;
           question.section = factor.section;
+
+
           const options = [{
               name: "Opt1",
               text: req.body.Opt1,
-              value: 1
+              value: Number(req.body.Opt1Value)
             },
             {
               name: "Opt2",
               text: req.body.Opt2,
-              value: 2
+              value: Number(req.body.Opt2Value)
             }
           ];
+
+          maxValue = Number(req.body.Opt1Value) + Number(req.body.Opt2Value);
 
           if (req.body.Opt3) {
             options.push({
               name: "Opt3",
               text: req.body.Opt3,
-              value: 3
+              value: Number(req.body.Opt3Value)
             });
-            maxValue = 3;
+            maxValue = maxValue + Number(req.body.Opt3Value);
           }
 
           if (req.body.Opt4) {
             options.push({
               name: "Opt4",
               text: req.body.Opt4,
-              value: 4
+              value: Number(req.body.Opt4Value)
             });
-            maxValue = 4;
+            maxValue = maxValue + Number(req.body.Opt4Value);
           }
 
           if (req.body.Opt5) {
             options.push({
               name: "Opt5",
               text: req.body.Opt5,
-              value: 4
+              value: Number(req.body.Opt5Value)
             });
-            maxValue = 5;
+            maxValue = maxValue + Number(req.body.Opt5Value);
           }
 
           question.answers = options
@@ -474,7 +484,11 @@ router.put('/question/edit/:id', (req, res, next) => {
 
           question.save()
             .then(question => {
-              res.redirect('/admin/questions/1');
+              factor.highestScore = factor.highestScore - previousMaxValue + maxValue;
+              factor.save()
+                .then(() => {
+                  res.redirect('/admin/questions/1');
+                });
             });
         });
     });
@@ -618,7 +632,9 @@ router.get("/preview/wifi", ensureAuthenticated, adminAuthenticated, (req, res, 
 });
 
 router.get("/preview/reading-questions", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
-  Question.find({ section: "Reading Skills" }).then(question => {
+  Question.find({
+    section: "Reading Skills"
+  }).then(question => {
     res.render("preview/reading-questions", {
       title: "Reading Skills",
       questions: question,

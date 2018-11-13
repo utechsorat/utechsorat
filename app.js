@@ -48,6 +48,13 @@ app.engine("handlebars", exphbs({
           return options.inverse(this);
         }
       },
+      numEqual: function(num1, num2, options){
+        if(Number(num1) == Number(num2)){
+          return options.fn(this);
+        } else {
+          return options.inverse(this);
+        }
+      },
       inc: function(value, options){
         return parseInt(value) + 1;
       },
