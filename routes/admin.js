@@ -10,6 +10,34 @@ const {
   adminAuthenticated
 } = require("../helpers/auth");
 
+const multer = require("multer");
+const path = require("path");
+
+// set storage engine
+const storage = multer.diskStorage({
+  destination: './public/img/',
+  filename: function(req, file, cb){
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+}
+
+// init upload
+const upload = multer({
+  storage: storage,
+  limit: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+}).single('questionImage');
+
 
 var passageP1 =
   'Washington DC is the capital of the United States of America. Washington takes its name from the first president of America , George Washington. The "Columbia" in "District of Columbia" stands for ............. well there are many theories to why it was named "Columbia"( I just hope it had nothing to do with Christopher Columbus because I know he did not "discover" that area of land too ). The capital of the United States is home to over 10 memorials and landmarks that commemorate some astounding events in history. These exquisitely designed landmarks attract tourists from across the globe.'
@@ -328,7 +356,8 @@ router.get('/question/add', ensureAuthenticated, adminAuthenticated, (req, res, 
 });
 
 // add question post route
-router.post('/question/add', (req, res, next) => {
+router.post('/question/add', upload, (req, res, next) => {
+  console.log(req.file);
   let maxValue;
   Factor.findOne({
       title: req.body.factor
@@ -339,6 +368,7 @@ router.post('/question/add', (req, res, next) => {
       question.text = req.body.text;
       question.factor = factor._id;
       question.section = factor.section;
+      question.image = req.file.path.slice(6) || ""
 
 
       const options = [{
@@ -384,7 +414,7 @@ router.post('/question/add', (req, res, next) => {
 
       question.answers = options;
       question.maxValue = maxValue;
-
+    
 
 
       question.save()
@@ -419,7 +449,7 @@ router.get('/question/edit/:id', ensureAuthenticated, adminAuthenticated, (req, 
 });
 
 // edit question put route
-router.put('/question/edit/:id', (req, res, next) => {
+router.put('/question/edit/:id', upload, (req, res, next) => {
   let maxValue;
   let previousMaxValue;
   Question.findOne({
@@ -434,6 +464,9 @@ router.put('/question/edit/:id', (req, res, next) => {
           question.text = req.body.text;
           question.factor = factor._id;
           question.section = factor.section;
+          if (req.file){
+            question.image = req.file.path.slice(6)
+          }
 
 
           const options = [{

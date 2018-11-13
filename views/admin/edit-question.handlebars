@@ -12,7 +12,8 @@
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row">
               <div class="col mx-auto">
-                <form method="post" action="/admin/question/edit/{{question._id}}?_method=PUT" class="mb-2 text-dark ">
+                <form method="post" action="/admin/question/edit/{{question._id}}?_method=PUT" class="mb-2 text-dark "
+                  enctype="multipart/form-data">
                   <input type="hidden" name="_method" value="PUT">
                   <h3 class="text-center">Edit Question</h3>
 
@@ -28,59 +29,59 @@
                         <select name="factor" class="form-control" required>
                           {{#each factors}}
                           <option value="{{title}}" {{#areEqual title ../question.factor.title}} selected{{/areEqual}}>{{title}}
-                            </option> {{/each}} </select> </div> <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                              <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt1" role="tab" aria-controls="home"
-                                aria-selected="true">Option 1</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt2" role="tab" aria-controls="home"
-                                aria-selected="true">Option 2</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt3" role="tab" aria-controls="home"
-                                aria-selected="true">Option 3</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt4" role="tab" aria-controls="home"
-                                aria-selected="true">Option 4</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt5" role="tab" aria-controls="home"
-                                aria-selected="true">Option 5</a>
-                            </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                              <div class="tab-pane fade" id="Opt5" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="form-group">
-                                  <input type="text" class="form-control m-2" name="Opt5" placeholder="Strongly Agree"
-                                    value="{{question.answers.4.text}}">
-                                </div>
-                                <div class="form-group ml-2">
-                                  <p>Value:</p>
-                                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-primary {{#areEqual 0 question.answers.4.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt5Value" value="0" {{#areEqual 0 question.answers.4.value}}checked{{/areEqual}}> 0
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 1 question.answers.4.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt5Value" value="1" {{#areEqual 1 question.answers.4.value}}checked{{/areEqual}}> 1
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 2 question.answers.4.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt5Value" value="2" {{#areEqual 2 question.answers.4.value}}checked{{/areEqual}}> 2
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 3 question.answers.4.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt5Value" value="3" {{#areEqual 3 question.answers.4.value}}checked{{/areEqual}}> 3
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 4 question.answers.4.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt5Value" value="4" {{#areEqual 4 question.answers.4.value}}checked{{/areEqual}}> 4
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 5 question.answers.4.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt5Value" value="5" {{#areEqual 5 question.answers.4.value}}checked{{/areEqual}}> 5
-                                    </label>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="tab-pane fade" id="Opt4" role="tabpanel" aria-labelledby="home-tab">
+                            </option> {{/each}} </select> </div> 
+                            
+                          
+                            <div class="form-group">
+                            <label for="image">Image:</label>
+                            <input type="file" name="questionImage" class="form-control-file" id="image">
+                      </div>
+
+
+                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt1" role="tab" aria-controls="home"
+                            aria-selected="true">Option 1</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt2" role="tab" aria-controls="home"
+                            aria-selected="true">Option 2</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt3" role="tab" aria-controls="home"
+                            aria-selected="true">Option 3</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt4" role="tab" aria-controls="home"
+                            aria-selected="true">Option 4</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="home-tab" data-toggle="tab" href="#Opt5" role="tab" aria-controls="home"
+                            aria-selected="true">Option 5</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade" id="Opt5" role="tabpanel" aria-labelledby="home-tab">
+                          <div class="form-group">
+                            <input type="text" class="form-control m-2" name="Opt5" placeholder="Strongly Agree" value="{{question.answers.4.text}}">
+                          </div>
+                          <div class="form-group ml-2">
+                            <p>Value:</p>
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                              <label class="btn btn-primary {{#areEqual 0 question.answers.4.value}}active{{/areEqual}}">
+                                <input type="radio" name="Opt5Value" value="0" {{#areEqual 0 question.answers.4.value}}
+                                  checked{{/areEqual}}> 0 </label> <label class="btn btn-primary {{#areEqual 1 question.answers.4.value}}active{{/areEqual}}">
+                                <input type="radio" name="Opt5Value" value="1" {{#areEqual 1 question.answers.4.value}}
+                                  checked{{/areEqual}}> 1 </label> <label class="btn btn-primary {{#areEqual 2 question.answers.4.value}}active{{/areEqual}}">
+                                <input type="radio" name="Opt5Value" value="2" {{#areEqual 2 question.answers.4.value}}
+                                  checked{{/areEqual}}> 2 </label> <label class="btn btn-primary {{#areEqual 3 question.answers.4.value}}active{{/areEqual}}">
+                                <input type="radio" name="Opt5Value" value="3" {{#areEqual 3 question.answers.4.value}}
+                                  checked{{/areEqual}}> 3 </label> <label class="btn btn-primary {{#areEqual 4 question.answers.4.value}}active{{/areEqual}}">
+                                <input type="radio" name="Opt5Value" value="4" {{#areEqual 4 question.answers.4.value}}
+                                  checked{{/areEqual}}> 4 </label> <label class="btn btn-primary {{#areEqual 5 question.answers.4.value}}active{{/areEqual}}">
+                                <input type="radio" name="Opt5Value" value="5" {{#areEqual 5 question.answers.4.value}}
+                                  checked{{/areEqual}}> 5 </label> </div> </div> </div> <div class="tab-pane fade" id="Opt4"
+                                  role="tabpanel" aria-labelledby="home-tab">
                                 <div class="form-group">
                                   <input type="text" class="form-control m-2" name="Opt4" placeholder="Agree" value="{{question.answers.3.text}}">
                                 </div>
@@ -88,125 +89,112 @@
                                   <p>Value:</p>
                                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-primary {{#areEqual 0 question.answers.3.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt4Value" value="0" {{#areEqual 0 question.answers.3.value}}checked{{/areEqual}}> 0
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 1 question.answers.3.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt4Value" value="1" {{#areEqual 1 question.answers.3.value}}checked{{/areEqual}}> 1
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 2 question.answers.3.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt4Value" value="2" {{#areEqual 2 question.answers.3.value}}checked{{/areEqual}}> 2
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 3 question.answers.3.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt4Value" value="3" {{#areEqual 3 question.answers.3.value}}checked{{/areEqual}}> 3
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 4 question.answers.3.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt4Value" value="4" {{#areEqual 4 question.answers.3.value}}checked{{/areEqual}}> 4
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 5 question.answers.3.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt4Value" value="5" {{#areEqual 5 question.answers.3.value}}checked{{/areEqual}}> 5
-                                    </label>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="tab-pane fade" id="Opt3" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="form-group">
-                                  <input type="text" class="form-control m-2" name="Opt3" placeholder="Neutral" value="{{question.answers.2.text}}">
-                                </div>
-                                <div class="form-group ml-2">
-                                  <p>Value:</p>
-                                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-primary {{#areEqual 0 question.answers.2.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt3Value" value="0" {{#areEqual 0 question.answers.2.value}}checked{{/areEqual}}> 0
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 1 question.answers.2.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt3Value" value="1" {{#areEqual 1 question.answers.2.value}}checked{{/areEqual}}> 1
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 2 question.answers.2.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt3Value" value="2" {{#areEqual 2 question.answers.2.value}}checked{{/areEqual}}> 2
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 3 question.answers.2.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt3Value" value="3" {{#areEqual 3 question.answers.2.value}}checked{{/areEqual}}> 3
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 4 question.answers.2.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt3Value" value="4" {{#areEqual 4 question.answers.2.value}}checked{{/areEqual}}> 4
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 5 question.answers.2.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt3Value" value="5" {{#areEqual 5 question.answers.2.value}}checked{{/areEqual}}> 5
-                                    </label>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="tab-pane fade" id="Opt2" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="form-group">
-                                  <input type="text" class="form-control m-2" name="Opt2" placeholder="Yes, Disagree"
-                                    value="{{question.answers.1.text}}" required>
-                                </div>
-                                <div class="form-group ml-2">
-                                  <p>Value:</p>
-                                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-primary {{#areEqual 0 question.answers.1.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt2Value" value="0" {{#areEqual 0 question.answers.1.value}}checked{{/areEqual}}> 0
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 1 question.answers.1.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt2Value" value="1" {{#areEqual 1 question.answers.1.value}}checked{{/areEqual}}> 1
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 2 question.answers.1.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt2Value" value="2" {{#areEqual 2 question.answers.1.value}}checked{{/areEqual}}> 2
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 3 question.answers.1.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt2Value" value="3" {{#areEqual 3 question.answers.1.value}}checked{{/areEqual}}> 3
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 4 question.answers.1.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt2Value" value="4" {{#areEqual 4 question.answers.1.value}}checked{{/areEqual}}> 4
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 5 question.answers.1.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt2Value" value="5" {{#areEqual 5 question.answers.1.value}}checked{{/areEqual}}> 5
-                                    </label>
-                                  </div>
-                                </div>
+                                      <input type="radio" name="Opt4Value" value="0"
+                                        {{#areEqual 0 question.answers.3.value}} checked{{/areEqual}}> 0 </label>
+                                        <label class="btn btn-primary {{#areEqual 1 question.answers.3.value}}active{{/areEqual}}">
+                                      <input type="radio" name="Opt4Value" value="1"
+                                        {{#areEqual 1 question.answers.3.value}} checked{{/areEqual}}> 1 </label>
+                                        <label class="btn btn-primary {{#areEqual 2 question.answers.3.value}}active{{/areEqual}}">
+                                      <input type="radio" name="Opt4Value" value="2"
+                                        {{#areEqual 2 question.answers.3.value}} checked{{/areEqual}}> 2 </label>
+                                        <label class="btn btn-primary {{#areEqual 3 question.answers.3.value}}active{{/areEqual}}">
+                                      <input type="radio" name="Opt4Value" value="3"
+                                        {{#areEqual 3 question.answers.3.value}} checked{{/areEqual}}> 3 </label>
+                                        <label class="btn btn-primary {{#areEqual 4 question.answers.3.value}}active{{/areEqual}}">
+                                      <input type="radio" name="Opt4Value" value="4"
+                                        {{#areEqual 4 question.answers.3.value}} checked{{/areEqual}}> 4 </label>
+                                        <label class="btn btn-primary {{#areEqual 5 question.answers.3.value}}active{{/areEqual}}">
+                                      <input type="radio" name="Opt4Value" value="5"
+                                        {{#areEqual 5 question.answers.3.value}} checked{{/areEqual}}> 5 </label> </div>
+                                        </div> </div> <div class="tab-pane fade" id="Opt3" role="tabpanel"
+                                        aria-labelledby="home-tab">
+                                      <div class="form-group">
+                                        <input type="text" class="form-control m-2" name="Opt3" placeholder="Neutral"
+                                          value="{{question.answers.2.text}}">
+                                      </div>
+                                      <div class="form-group ml-2">
+                                        <p>Value:</p>
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                          <label class="btn btn-primary {{#areEqual 0 question.answers.2.value}}active{{/areEqual}}">
+                                            <input type="radio" name="Opt3Value" value="0"
+                                              {{#areEqual 0 question.answers.2.value}} checked{{/areEqual}}> 0 </label>
+                                              <label class="btn btn-primary {{#areEqual 1 question.answers.2.value}}active{{/areEqual}}">
+                                            <input type="radio" name="Opt3Value" value="1"
+                                              {{#areEqual 1 question.answers.2.value}} checked{{/areEqual}}> 1 </label>
+                                              <label class="btn btn-primary {{#areEqual 2 question.answers.2.value}}active{{/areEqual}}">
+                                            <input type="radio" name="Opt3Value" value="2"
+                                              {{#areEqual 2 question.answers.2.value}} checked{{/areEqual}}> 2 </label>
+                                              <label class="btn btn-primary {{#areEqual 3 question.answers.2.value}}active{{/areEqual}}">
+                                            <input type="radio" name="Opt3Value" value="3"
+                                              {{#areEqual 3 question.answers.2.value}} checked{{/areEqual}}> 3 </label>
+                                              <label class="btn btn-primary {{#areEqual 4 question.answers.2.value}}active{{/areEqual}}">
+                                            <input type="radio" name="Opt3Value" value="4"
+                                              {{#areEqual 4 question.answers.2.value}} checked{{/areEqual}}> 4 </label>
+                                              <label class="btn btn-primary {{#areEqual 5 question.answers.2.value}}active{{/areEqual}}">
+                                            <input type="radio" name="Opt3Value" value="5"
+                                              {{#areEqual 5 question.answers.2.value}} checked{{/areEqual}}> 5 </label>
+                                              </div> </div> </div> <div class="tab-pane fade" id="Opt2" role="tabpanel"
+                                              aria-labelledby="home-tab">
+                                            <div class="form-group">
+                                              <input type="text" class="form-control m-2" name="Opt2" placeholder="Yes, Disagree"
+                                                value="{{question.answers.1.text}}" required>
+                                            </div>
+                                            <div class="form-group ml-2">
+                                              <p>Value:</p>
+                                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-primary {{#areEqual 0 question.answers.1.value}}active{{/areEqual}}">
+                                                  <input type="radio" name="Opt2Value" value="0"
+                                                    {{#areEqual 0 question.answers.1.value}} checked{{/areEqual}}> 0 </label>
+                                                    <label class="btn btn-primary {{#areEqual 1 question.answers.1.value}}active{{/areEqual}}">
+                                                  <input type="radio" name="Opt2Value" value="1"
+                                                    {{#areEqual 1 question.answers.1.value}} checked{{/areEqual}}> 1 </label>
+                                                    <label class="btn btn-primary {{#areEqual 2 question.answers.1.value}}active{{/areEqual}}">
+                                                  <input type="radio" name="Opt2Value" value="2"
+                                                    {{#areEqual 2 question.answers.1.value}} checked{{/areEqual}}> 2 </label>
+                                                    <label class="btn btn-primary {{#areEqual 3 question.answers.1.value}}active{{/areEqual}}">
+                                                  <input type="radio" name="Opt2Value" value="3"
+                                                    {{#areEqual 3 question.answers.1.value}} checked{{/areEqual}}> 3 </label>
+                                                    <label class="btn btn-primary {{#areEqual 4 question.answers.1.value}}active{{/areEqual}}">
+                                                  <input type="radio" name="Opt2Value" value="4"
+                                                    {{#areEqual 4 question.answers.1.value}} checked{{/areEqual}}> 4 </label>
+                                                    <label class="btn btn-primary {{#areEqual 5 question.answers.1.value}}active{{/areEqual}}">
+                                                  <input type="radio" name="Opt2Value" value="5"
+                                                    {{#areEqual 5 question.answers.1.value}} checked{{/areEqual}}> 5 </label>
+                                                    </div> </div> </div> <div class="tab-pane fade" id="Opt1" role="tabpanel"
+                                                    aria-labelledby="home-tab">
+                                                  <div class="form-group">
+                                                    <input type="text" class="form-control m-2" name="Opt1" placeholder="No, Strongly Disagree"
+                                                      value="{{question.answers.0.text}}" required>
+                                                  </div>
+                                                  <div class="form-group ml-2">
+                                                    <p>Value:</p>
+                                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                      <label class="btn btn-primary {{#areEqual 0 question.answers.0.value}}active{{/areEqual}}">
+                                                        <input type="radio" name="Opt1Value" value="0"
+                                                          {{#areEqual 0 question.answers.0.value}} checked{{/areEqual}}>
+                                                          0 </label> <label class="btn btn-primary {{#areEqual 1 question.answers.0.value}}active{{/areEqual}}">
+                                                        <input type="radio" name="Opt1Value" value="1"
+                                                          {{#areEqual 1 question.answers.0.value}} checked{{/areEqual}}>
+                                                          1 </label> <label class="btn btn-primary {{#areEqual 2 question.answers.0.value}}active{{/areEqual}}">
+                                                        <input type="radio" name="Opt1Value" value="2"
+                                                          {{#areEqual 2 question.answers.0.value}} checked{{/areEqual}}>
+                                                          2 </label> <label class="btn btn-primary {{#areEqual 3 question.answers.0.value}}active{{/areEqual}}">
+                                                        <input type="radio" name="Opt1Value" value="3"
+                                                          {{#areEqual 3 question.answers.0.value}} checked{{/areEqual}}>
+                                                          3 </label> <label class="btn btn-primary {{#areEqual 4 question.answers.0.value}}active{{/areEqual}}">
+                                                        <input type="radio" name="Opt1Value" value="4"
+                                                          {{#areEqual 4 question.answers.0.value}} checked{{/areEqual}}>
+                                                          4 </label> <label class="btn btn-primary {{#areEqual 5 question.answers.0.value}}active{{/areEqual}}">
+                                                        <input type="radio" name="Opt1Value" value="5"
+                                                          {{#areEqual 5 question.answers.0.value}} checked{{/areEqual}}>
+                                                          5 </label> </div> </div> </div> </div> <div class="mt-2">
+                                                        <a class="btn btn-outline-danger" href="/admin/questions/1">Back</a>
+                                                        <input type="submit" class="btn btn-outline-success" value="Save">
+                                                    </div>
 
-                              </div>
-                              <div class="tab-pane fade" id="Opt1" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="form-group">
-                                  <input type="text" class="form-control m-2" name="Opt1" placeholder="No, Strongly Disagree"
-                                    value="{{question.answers.0.text}}" required>
-                                </div>
-                                <div class="form-group ml-2">
-                                  <p>Value:</p>
-                                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-primary {{#areEqual 0 question.answers.0.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt1Value" value="0" {{#areEqual 0 question.answers.0.value}}checked{{/areEqual}}> 0
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 1 question.answers.0.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt1Value" value="1" {{#areEqual 1 question.answers.0.value}}checked{{/areEqual}}> 1
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 2 question.answers.0.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt1Value" value="2" {{#areEqual 2 question.answers.0.value}}checked{{/areEqual}}> 2
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 3 question.answers.0.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt1Value" value="3" {{#areEqual 3 question.answers.0.value}}checked{{/areEqual}}> 3
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 4 question.answers.0.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt1Value" value="4" {{#areEqual 4 question.answers.0.value}}checked{{/areEqual}}> 4
-                                    </label>
-                                    <label class="btn btn-primary {{#areEqual 5 question.answers.0.value}}active{{/areEqual}}">
-                                      <input type="radio" name="Opt1Value" value="5" {{#areEqual 5 question.answers.0.value}}checked{{/areEqual}}> 5
-                                    </label>
-                                  </div>
-                                </div>
+                                                  </div>
 
-                              </div>
-
-                            </div>
-
-                            <div class="mt-2">
-                              <a class="btn btn-outline-danger" href="/admin/questions/1">Back</a>
-                              <input type="submit" class="btn btn-outline-success" value="Save">
-                            </div>
-
-                      </div>
-
-                    </div>
+                                              </div>
 
 
 
