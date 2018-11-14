@@ -28,6 +28,9 @@ const PersonalInfoSchema = new Schema({
     disability: {
         type: String
     },
+    utechStudent: {
+        type: Boolean
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'

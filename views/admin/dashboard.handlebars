@@ -18,13 +18,13 @@
                       <i class="fas fa-users fa-3x text-success"></i>
                       <div class="text-right text-secondary">
                         <h5>Registered Users</h5>
-                        <h3>100</h3>
+                        <h3>{{userCount}}</h3>
                       </div>
                     </div>
                   </div>
                   <div class="card-footer text-secondary">
                     <i class="fas fa-sync mr-3"></i>
-                    <span>Updated Now</span>
+                    <span>Refresh to Update</span>
                   </div>
                 </div>
               </div>
@@ -35,13 +35,13 @@
                       <i class="fas fa-puzzle-piece fa-3x text-danger"></i>
                       <div class="text-right text-secondary">
                         <h5>Factors</h5>
-                        <h3>10</h3>
+                        <h3>{{factorCount}}</h3>
                       </div>
                     </div>
                   </div>
                   <div class="card-footer text-secondary">
                     <i class="fas fa-sync mr-3"></i>
-                    <span>Updated Now</span>
+                    <span>Refresh to Update</span>
                   </div>
                 </div>
               </div>
@@ -52,13 +52,13 @@
                       <i class="fas fa-question fa-3x text-info"></i>
                       <div class="text-right text-secondary">
                         <h5>Questions</h5>
-                        <h3>50</h3>
+                        <h3>{{questionCount}}</h3>
                       </div>
                     </div>
                   </div>
                   <div class="card-footer text-secondary">
                     <i class="fas fa-sync mr-3"></i>
-                    <span>Updated Now</span>
+                    <span>Refresh to Update</span>
                   </div>
                 </div>
               </div>
@@ -69,13 +69,30 @@
                       <i class="fas fa-chart-line fa-3x text-warning"></i>
                       <div class="text-right text-secondary">
                         <h5>Results</h5>
-                        <h3>50</h3>
+                        <h3>{{resultCount}}</h3>
                       </div>
                     </div>
                   </div>
                   <div class="card-footer text-secondary">
                     <i class="fas fa-sync mr-3"></i>
-                    <span>Updated Now</span>
+                    <span>Refresh to Update</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-style">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <i class="fas fa-chess-knight fa-3x text-secondary"></i>
+                      <div class="text-right text-secondary">
+                        <h5>UTech Students</h5>
+                        <h3>{{utechCount}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-secondary">
+                    <i class="fas fa-sync mr-3"></i>
+                    <span>Refresh to Update</span>
                   </div>
                 </div>
               </div>
@@ -97,8 +114,8 @@
                 <canvas id="ageChart"></canvas>
               </div>
               <div class="col-xl-6 col-12">
-                <h3 class="text-muted text-center mb-3">Users by Nationality</h3>
-                <canvas id="nationalityChart"></canvas>
+                <h3 class="text-muted text-center mb-3">Users by Residence</h3>
+                <canvas id="residenceChart"></canvas>
               </div>
             </div>
           </div>
@@ -115,60 +132,60 @@
 <script>
   var ctx = document.getElementById("ageChart");
   var myChart = new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: {
-      labels: ["16 - 19", "20 - 25", "26 - 35", "36 - 45", "46 - 55", "56 and over"],
-      datasets: [{
-        data: [36, 20, 20, 10, 5, 5, 4],
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
+      labels: {{{ age }}},
+  datasets: [{
+    data: {{{ ageCount }}},
+    lineTension: 0,
+    backgroundColor: '#007bff',
+    borderColor: '#007bff',
+    borderWidth: 4,
+    pointBackgroundColor: '#007bff'
       }]
     },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: false
+        }
+      }]
+    },
+    legend: {
+      display: false,
       }
-    }
+  }
   });
 </script>
 
 <script>
-  var ctx = document.getElementById("nationalityChart");
+  var ctx = document.getElementById("residenceChart");
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ["Jamaica", "United States", "Trinidad", "Cuba", "Barbados", "Guyana"],
-      datasets: [{
-        data: [36, 20, 20, 10, 5, 5, 4],
-        lineTension: 0,
-        backgroundColor: '#007bff',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
+      labels: {{{ residence }}},
+  datasets: [{
+    data: {{{ residenceCount }}},
+    lineTension: 0,
+    backgroundColor: '#007bff',
+    borderColor: '#007bff',
+    borderWidth: 4,
+    pointBackgroundColor: '#007bff'
       }]
     },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false
-          }
-        }]
-      },
-      legend: {
-        display: false,
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: false
+        }
+      }]
+    },
+    legend: {
+      display: false,
       }
-    }
+  }
   });
 </script>
 <!-- end of chart data-->

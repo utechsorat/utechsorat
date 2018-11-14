@@ -72,6 +72,7 @@ router.post("/personal-information", ensureAuthenticated, (req, res, next) => {
     faculty: req.body.faculty,
     interest: req.body.interest,
     disability: disability,
+    utechStudent: req.body.utech,
     user: req.user._id
   });
 
@@ -562,7 +563,7 @@ router.post("/reading-questions", ensureAuthenticated, (req, res, next) => {
     .exec()
     .then(questions => {
       Factor.find({
-          section: "Comprehension",
+          section: "Reading Skills",
           questionCount: {
             $gt: 0
           }
@@ -602,7 +603,7 @@ router.post("/reading-questions", ensureAuthenticated, (req, res, next) => {
 
             // if these results are already present delete them to prevent duplicates
             const query = {
-              section: "Comprehension",
+              section: "Reading Skills",
               user: req.user._id
             };
             Result.findOneAndDelete(query)
@@ -668,6 +669,7 @@ router.post("/typing", ensureAuthenticated, (req, res, next) => {
     response = "no response";
   }
   const result = new Result({
+    _id: mongoose.Types.ObjectId(),
     section: "Typing Skills",
     factor: "Typing Speed",
     value: value,
@@ -693,13 +695,14 @@ router.post("/typing", ensureAuthenticated, (req, res, next) => {
       console.log(err);
     });
 
-  const query1 = {
-    _id: req.user._id
-  };
-  const update = {
-    section: "downloadTest"
-  };
-  User.updateSection(query1, update)
+
+  User.updateOne({
+      _id: req.user._id
+    }, {
+      $set: {
+        section: "downloadTest"
+      }
+    })
     .then()
     .catch(err => {
       console.log(err);
@@ -730,6 +733,7 @@ router.post("/download-test", ensureAuthenticated, (req, res, next) => {
     response = "no response";
   }
   const result = new Result({
+    _id: mongoose.Types.ObjectId(),
     section: "Download Speed",
     factor: "Download Speed",
     value: value,
@@ -761,10 +765,10 @@ router.post("/download-test", ensureAuthenticated, (req, res, next) => {
     section: "complete"
   };
   User.updateOne(query2, update)
-  .then()
-  .catch(err => {
-    console.log(err);
-  })
+    .then()
+    .catch(err => {
+      console.log(err);
+    })
   res.redirect("/assessment/complete");
 });
 

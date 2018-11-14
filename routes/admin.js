@@ -16,13 +16,13 @@ const path = require("path");
 // set storage engine
 const storage = multer.diskStorage({
   destination: './public/img/',
-  filename: function(req, file, cb){
+  filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
     cb(null, true);
   } else {
     cb(null, false);
@@ -49,12 +49,109 @@ var passageP2 = "I visited Washington DC in the summer of 2014 and it was extrem
 const User = require("../models/User");
 const Factor = require("../models/Factor");
 const Question = require("../models/Question")
+const PersonalInfo = require("../models/PersonalInfo");
 
 // dashboard get route
 router.get("/dashboard", (req, res) => {
-  res.render("admin/dashboard", {
-    dashboard: true
-  });
+
+  var age = [];
+  var ageCount = [];
+
+  var residence = [];
+  var residenceCount = [];
+
+  User.find({})
+    .exec()
+    .then(users => {
+      Factor.find({})
+        .exec()
+        .then(factors => {
+          Question.find({})
+            .exec()
+            .then(questions => {
+              User.find({
+                  section: 'complete'
+                })
+                .exec()
+                .then(results => {
+                  PersonalInfo.find({
+                      utechStudent: 'true'
+                    })
+                    .exec()
+                    .then(utechs => {
+                      PersonalInfo.aggregate(
+                          [{
+                            $group: {
+                              _id: "$residence",
+                              count: {
+                                $sum: 1
+                              }
+                            }
+                          }])
+                        .then(residenceResults => {
+
+                          for (var i = 0; i < residenceResults.length; i++) {
+                            residence.push(residenceResults[i]._id);
+                            residenceCount.push(residenceResults[i].count);
+                          }
+
+                          PersonalInfo.aggregate(
+                              [{
+                                $group: {
+                                  _id: "$age",
+                                  count: {
+                                    $sum: 1
+                                  }
+                                }
+                              }])
+                            .then(ageResults => {
+
+                              for (var i = 0; i < ageResults.length; i++) {
+                                age.push(ageResults[i]._id);
+                                ageCount.push(ageResults[i].count);
+                              }
+
+
+                              res.render("admin/dashboard", {
+                                dashboard: true,
+                                userCount: users.length,
+                                factorCount: factors.length,
+                                questionCount: questions.length,
+                                resultCount: results.length,
+                                utechCount: utechs.length,
+                                residence: JSON.stringify(residence),
+                                residenceCount: JSON.stringify(residenceCount),
+                                age: JSON.stringify(age),
+                                ageCount: JSON.stringify(ageCount),
+                              })
+                            })
+                            .catch(err => {
+                              console.log(err)
+                            })
+
+                        })
+                        .catch(err => {
+                          console.log(err);
+                        })
+
+                    })
+                    .catch(err => {
+                      console.log(err)
+                    })
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+
+    });
 });
 
 // users get route
@@ -357,8 +454,8 @@ router.get('/question/add', ensureAuthenticated, adminAuthenticated, (req, res, 
 
 // add question post route
 router.post('/question/add', upload, (req, res, next) => {
-  console.log(req.file);
-  let maxValue;
+
+  let maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value));
   Factor.findOne({
       title: req.body.factor
     })
@@ -368,7 +465,10 @@ router.post('/question/add', upload, (req, res, next) => {
       question.text = req.body.text;
       question.factor = factor._id;
       question.section = factor.section;
-      question.image = req.file.path.slice(6) || ""
+      if (req.file) {
+        question.image = req.file.path.slice(6)
+      }
+
 
 
       const options = [{
@@ -383,7 +483,6 @@ router.post('/question/add', upload, (req, res, next) => {
         }
       ];
 
-      maxValue = Number(req.body.Opt1Value) + Number(req.body.Opt2Value);
 
       if (req.body.Opt3) {
         options.push({
@@ -391,7 +490,7 @@ router.post('/question/add', upload, (req, res, next) => {
           text: req.body.Opt3,
           value: Number(req.body.Opt3Value)
         });
-        maxValue = maxValue + Number(req.body.Opt3Value);
+        maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value));
       }
 
       if (req.body.Opt4) {
@@ -400,7 +499,7 @@ router.post('/question/add', upload, (req, res, next) => {
           text: req.body.Opt4,
           value: Number(req.body.Opt4Value)
         });
-        maxValue = maxValue + Number(req.body.Opt4Value);
+        maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value), Number(req.body.Opt4Value));
       }
 
       if (req.body.Opt5) {
@@ -409,12 +508,12 @@ router.post('/question/add', upload, (req, res, next) => {
           text: req.body.Opt5,
           value: Number(req.body.Opt5Value)
         });
-        maxValue = maxValue + Number(req.body.Opt5Value);
+        maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value), Number(req.body.Opt4Value), Number(req.body.Opt5Value));
       }
 
       question.answers = options;
       question.maxValue = maxValue;
-    
+
 
 
       question.save()
@@ -450,7 +549,7 @@ router.get('/question/edit/:id', ensureAuthenticated, adminAuthenticated, (req, 
 
 // edit question put route
 router.put('/question/edit/:id', upload, (req, res, next) => {
-  let maxValue;
+  let maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value));
   let previousMaxValue;
   Question.findOne({
       _id: req.params.id
@@ -461,14 +560,6 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
           title: req.body.factor
         })
         .then(factor => {
-          question.text = req.body.text;
-          question.factor = factor._id;
-          question.section = factor.section;
-          if (req.file){
-            question.image = req.file.path.slice(6)
-          }
-
-
           const options = [{
               name: "Opt1",
               text: req.body.Opt1,
@@ -489,7 +580,7 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
               text: req.body.Opt3,
               value: Number(req.body.Opt3Value)
             });
-            maxValue = maxValue + Number(req.body.Opt3Value);
+            maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value));
           }
 
           if (req.body.Opt4) {
@@ -498,7 +589,7 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
               text: req.body.Opt4,
               value: Number(req.body.Opt4Value)
             });
-            maxValue = maxValue + Number(req.body.Opt4Value);
+            maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value), Number(req.body.Opt4Value));
           }
 
           if (req.body.Opt5) {
@@ -507,17 +598,43 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
               text: req.body.Opt5,
               value: Number(req.body.Opt5Value)
             });
-            maxValue = maxValue + Number(req.body.Opt5Value);
+            maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value), Number(req.body.Opt4Value), Number(req.body.Opt5Value));
           }
 
           question.answers = options
           question.maxValue = maxValue;
+          question.text = req.body.text;
+          if (String(question.factor) == String(factor._id)) {
+
+            factor.highestScore = factor.highestScore - previousMaxValue + maxValue;
+          }
+          if (String(question.factor) != String(factor._id)) {
+
+            factor.highestScore = factor.highestScore + maxValue;
+            factor.questionCount = factor.questionCount + 1;
+            Factor.updateOne({
+                _id: question.factor
+              }, {
+                $inc: {
+                  questionCount: -1,
+                  highestScore: (previousMaxValue * -1)
+                }
+              })
+              .then()
+              .catch(err => {
+                console.log(err);
+              });
+          }
+          question.factor = factor._id;
+          question.section = factor.section;
+          if (req.file) {
+            question.image = req.file.path.slice(6)
+          }
 
 
 
           question.save()
             .then(question => {
-              factor.highestScore = factor.highestScore - previousMaxValue + maxValue;
               factor.save()
                 .then(() => {
                   res.redirect('/admin/questions/1');
