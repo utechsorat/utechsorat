@@ -1,10 +1,8 @@
 <div id="admin">
     <div class="admin-inner">
-
         <!-- sidebar -->
         {{> _results-nav}}
         <!-- end of sidebar -->
-
         <section>
             <div class="container-fluid text-dark">
                 <div class="row my-sm-3">
@@ -24,8 +22,6 @@
                                 <li>Low speed readers = 0 - 99 words per minute (wpm)</li>
                                 <li>Medium speed readers = 100 - 199 words per minute (wpm)</li>
                                 <li>High speed readers = 200 and above words per minute (wpm)</li>
-
-
                                 <div id="readingSpeed"></div>
                                 <div id="readingComprehension"></div>
                                 {{#each results}}
@@ -33,7 +29,6 @@
                                 <hr>
                                 <p>{{{response}}}</p>
                                 {{/each}}
-
                             </div>
                         </div>
                     </div>
@@ -41,12 +36,8 @@
             </div>
         </section>
         <!-- end of charts -->
-
-
     </div>
 </div>
-
-
 
 <!-- reading speed chart  -->
 <script>

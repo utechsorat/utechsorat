@@ -1,10 +1,8 @@
 <div id="admin">
     <div class="admin-inner">
-
         <!-- sidebar -->
         {{> _results-nav}}
         <!-- end of sidebar -->
-
         <section>
             <div class="container-fluid text-dark">
                 <div class="row my-sm-3">
@@ -12,7 +10,6 @@
                         <div class="row">
                             <div class="col-12">
                               <h4>{{title}}</h4>
-
                             <p>
                                 The typing speed test is very important in online learning and so it is only suited that you are tested on this skill. Students will be expected to complete tests and assignments in a specified time and therefore it is essential that students are able to respond as quickly as possible to gain maximum marks.
                                 <br><br> This test measures the students AWPM (Accurate Words Per Minute), so therefore it measures both the accuracy as well as the speed.
@@ -20,7 +17,6 @@
                                 <b></b>
                             </p>
                             <div id="typingSpeed"></div>
-
                             </div>
                         </div>
                     </div>
@@ -28,14 +24,9 @@
             </div>
         </section>
         <!-- end of charts -->
-
-
     </div>
 </div>
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-
 <!-- typing speed chart  -->
 <script>
     var results = {{{ resultString }}}

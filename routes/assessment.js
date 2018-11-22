@@ -10,7 +10,6 @@ const {
 
 // models
 const Question = require("../models/Question");
-const Answer = require("../models/Answer");
 const Result = require("../models/Result");
 const Factor = require("../models/Factor");
 const User = require("../models/User");
@@ -48,16 +47,6 @@ router.get("/personal-information", ensureAuthenticated, (req, res, next) => {
 router.post("/personal-information", ensureAuthenticated, (req, res, next) => {
   // if these personal information are already present delete them to prevent duplicates
 
-  PersonalInfo.findOneAndDelete({
-      user: req.user._id
-    })
-    .exec()
-    .then()
-    .catch(err => {
-      console.log(err)
-    });
-
-  //
   var disability = req.body.disability;
   if (disability == "other") {
     disability = req.body.other - disability;
@@ -76,25 +65,37 @@ router.post("/personal-information", ensureAuthenticated, (req, res, next) => {
     user: req.user._id
   });
 
-  personalInfo.save()
-    .then()
-    .catch(err => {
-      console.log(err);
-    });
-
-  User.updateOne({
-      _id: req.user._id
-    }, {
-      $set: {
-        section: "individual-attributes"
-      }
+  PersonalInfo.findOneAndDelete({
+      user: req.user._id
     })
     .exec()
-    .then()
-    .catch(err => {
-      console.log(err);
+    .then(() => {
+      personalInfo.save()
+        .then(() => {
+          User.updateOne({
+              _id: req.user._id
+            }, {
+              $set: {
+                section: "individual-attributes"
+              }
+            })
+            .exec()
+            .then(() => {
+              res.redirect("/assessment/individual-attributes");
+            })
+            .catch(err => {
+              console.log(err);
+            })
+        })
+        .catch(err => {
+          console.log(err);
+        });
     })
-  res.redirect("/assessment/individual-attributes");
+    .catch(err => {
+      console.log(err)
+    });
+
+
 });
 
 // individual attributes route (get)
@@ -113,7 +114,13 @@ router.get("/individual-attributes", ensureAuthenticated, (req, res, next) => {
             questions: question,
             factors: factors
           });
-        });
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })
+    .catch(err => {
+      console.log(err);
     });
 });
 
@@ -152,7 +159,6 @@ router.post("/individual-attributes", ensureAuthenticated, (req, res, next) => {
             } else {
               response = "no response";
             }
-
             const result = new Result({
               _id: mongoose.Types.ObjectId(),
               section: "Individual Attributes",
@@ -168,17 +174,16 @@ router.post("/individual-attributes", ensureAuthenticated, (req, res, next) => {
               user: req.user._id
             };
             Result.findOneAndDelete(query)
-              .then()
+              .then(() => {
+                result.save()
+                  .then()
+                  .catch(err => {
+                    console.log(err);
+                  })
+              })
               .catch(err => {
                 console.log(err);
               })
-
-            result.save()
-              .then()
-              .catch(err => {
-                console.log(err);
-              })
-
           }
         })
         .catch(err => {
@@ -221,8 +226,14 @@ router.get("/life-factors", ensureAuthenticated, (req, res, next) => {
             questions: question,
             factors: factors
           });
-        });
-    });
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })
+    .catch(err => {
+      console.log(err);
+    })
 });
 
 
@@ -277,17 +288,28 @@ router.post("/life-factors", ensureAuthenticated, (req, res, next) => {
               user: req.user._id
             };
             Result.findOneAndDelete(query)
-              .then()
+              .then(() => {
+                result.save()
+                  .then(() => {
+                    User.updateOne({
+                        _id: req.user._id
+                      }, {
+                        $set: {
+                          section: "technology-factors"
+                        }
+                      })
+                      .then()
+                      .catch(err => {
+                        console.log(err);
+                      })
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  })
+              })
               .catch(err => {
                 console.log(err);
               })
-
-            result.save()
-              .then()
-              .catch(err => {
-                console.log(err);
-              })
-
           }
         })
         .catch(err => {
@@ -297,20 +319,6 @@ router.post("/life-factors", ensureAuthenticated, (req, res, next) => {
     .catch(err => {
       console.log(err)
     });
-
-
-  User.updateOne({
-      _id: req.user._id
-    }, {
-      $set: {
-        section: "technology-factors"
-      }
-    })
-    .then()
-    .catch(err => {
-      console.log(err);
-    })
-
   res.redirect("/assessment/technology-factors");
 });
 
@@ -334,9 +342,6 @@ router.get("/technology-factors", ensureAuthenticated, (req, res, next) => {
         });
     });
 });
-
-
-
 
 // technology factors route (post)
 router.post("/technology-factors", ensureAuthenticated, (req, res, next) => {
@@ -389,17 +394,16 @@ router.post("/technology-factors", ensureAuthenticated, (req, res, next) => {
               user: req.user._id
             };
             Result.findOneAndDelete(query)
-              .then()
+              .then(() => {
+                result.save()
+                  .then()
+                  .catch(err => {
+                    console.log(err);
+                  })
+              })
               .catch(err => {
                 console.log(err);
-              })
-
-            result.save()
-              .then()
-              .catch(err => {
-                console.log(err);
-              })
-
+              });
           }
         })
         .catch(err => {
@@ -475,10 +479,6 @@ router.get(
 
 
     // get factors for reading and comprehension from database
-    const query = {
-      title: "Reading Speed"
-    };
-
     Factor.find({
         title: "Reading Speed"
       })
@@ -511,16 +511,18 @@ router.get(
           user: req.user._id
         };
         Result.findOneAndDelete(query)
-          .then()
+          .then(() => {
+            result.save()
+              .then()
+              .catch(err => {
+                console.log(err);
+              })
+          })
           .catch(err => {
             console.log(err);
           });
 
-        result.save()
-          .then()
-          .catch(err => {
-            console.log(err);
-          })
+
       })
       .catch(err => {
         console.log(err);
@@ -603,27 +605,25 @@ router.post("/reading-questions", ensureAuthenticated, (req, res, next) => {
 
             // if these results are already present delete them to prevent duplicates
             const query = {
-              section: "Reading Skills",
+              factor: "Comprehension",
               user: req.user._id
             };
             Result.findOneAndDelete(query)
-              .then()
+              .then(() => {
+                result.save()
+                  .then()
+                  .catch(err => {
+                    console.log(err);
+                  })
+              })
               .catch(err => {
                 console.log(err);
               })
-
-            result.save()
-              .then()
-              .catch(err => {
-                console.log(err);
-              })
-
           }
         })
         .catch(err => {
           console.log(err)
         });
-
     })
     .catch(err => {
       console.log(err);
@@ -684,17 +684,16 @@ router.post("/typing", ensureAuthenticated, (req, res, next) => {
   };
 
   Result.findOneAndDelete(query)
-    .then()
+    .then(() => {
+      result.save()
+        .then()
+        .catch(err => {
+          console.log(err);
+        });
+    })
     .catch(err => {
       console.log(err);
     });
-
-  result.save()
-    .then()
-    .catch(err => {
-      console.log(err);
-    });
-
 
   User.updateOne({
       _id: req.user._id
@@ -747,16 +746,18 @@ router.post("/download-test", ensureAuthenticated, (req, res, next) => {
     user: req.user._id
   };
   Result.findOneAndDelete(query)
-    .then()
+    .then(() => {
+      result.save()
+        .then()
+        .catch(err => {
+          console.log(err);
+        });
+    })
     .catch(err => {
       console.log(err);
     });
 
-  result.save()
-    .then()
-    .catch(err => {
-      console.log(err);
-    });
+
 
   const query2 = {
     _id: req.user._id

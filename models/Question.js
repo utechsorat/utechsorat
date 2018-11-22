@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// question schema
 const QuestionSchema = new Schema({
     _id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -43,7 +42,5 @@ const QuestionSchema = new Schema({
 
 });
 
-
-
-const Question = module.exports = mongoose.model('Question', QuestionSchema, 'questions');
+const Question = module.exports = mongoose.model('Question', QuestionSchema);
 

@@ -97,8 +97,8 @@ router.post("/register", (req, res) => {
       email: req.body.email
     }).then(user => {
       if (user) {
-        req.flash("error_msg", "Email already regsitered");
-        res.redirect("/users/register", {
+        req.flash("error_msg", "Email already registered");
+        res.redirect(409, "/users/register", {
           errors: errors,
           firstname: req.body.firstname,
           lastname: req.body.lastname,

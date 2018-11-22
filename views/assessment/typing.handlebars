@@ -7,58 +7,58 @@
                         <div class="card text-dark mb-2">
                             <div class="card-body">
                                 <h1>
-                        {{title}}</h1>
-                    <hr>
-
-                    <div class="card mx-auto text-center">
-                        <div class="card-body">
-                            <h4 class="card-title">Typing Speed Test</h4>
-                            <p class="card-text">
-                                This sections seeks to address your typing speed as well as accuracy under certain
-                                conditions. A paragraph is given below for you to rewrite.
-                                Let us see how many "correct words" from the passage you can obtain within a one minute
-                                period.
-                            </p>
-                            <div id="countdown">
-                                Time Remaining:
-                                <span id="timer">01:00</span>
-                            </div>
-                            <div>
-                                <textarea disabled id="testingParagraph" style="overflow:hidden; height: 120px;"
-                                    readonly> I challenged myself this year to be more adventurous and try my very best to step out of my comfort zone. I realized that this even happened without most of my input, curved balls were just thrown everywhere and luckily I was getting myself mentally prepared for this. The most yearned for and long awaited break named SUMMER was finally here and that meant many stuff for me. 
+                                    {{title}}</h1>
+                                <hr>
+                                <div class="card mx-auto text-center">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Typing Speed Test</h4>
+                                        <p class="card-text">
+                                            This sections seeks to address your typing speed as well as accuracy under
+                                            certain
+                                            conditions. A paragraph is given below for you to rewrite.
+                                            Let us see how many "correct words" from the passage you can obtain within
+                                            a one minute
+                                            period.
+                                        </p>
+                                        <div id="countdown">
+                                            Time Remaining:
+                                            <span id="timer">01:00</span>
+                                        </div>
+                                        <div>
+                                            <textarea disabled id="testingParagraph" style="overflow:hidden; height: 120px;"
+                                                readonly> I challenged myself this year to be more adventurous and try my very best to step out of my comfort zone. I realized that this even happened without most of my input, curved balls were just thrown everywhere and luckily I was getting myself mentally prepared for this. The most yearned for and long awaited break named SUMMER was finally here and that meant many stuff for me. 
                                 </textarea>
-                            </div>
-                            <div>
-                                <input id="hiddenParagraph" readonly value="I challenged myself this year to be more adventurous and try my very best to step out of my comfort zone. I realized that this even happened without most of my input, curved balls were just thrown everywhere and luckily I was getting myself mentally prepared for this. The most yearned for and long awaited break named SUMMER was finally here and that meant many stuff for me. ">
-                                </input>
-
-                            </div>
-                            <div style="hidden">
-                                <input type="textbox" id="userInput" placeholder="Type here..." onkeypress="textComparison(event)"
-                                    onpaste="return false" />
-                            </div>
-                            <div>
-                                <button id="startBtn" class="btn btn-success btn-color" onclick="startTimer()">Click to
-                                    Start</button>
-                            </div>
-                            <br>
-                            <div class="progress" style="height: 20px">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-gold"
-                                    role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%">95%</div>
-                            </div>
-                            <div>
-                                <span>
-                                    <form action="/assessment/typing" method="POST">
-                                        <input name="wpm" id="wpm" value="" />
-                                        <button type="submit" id="nextBtn" class="btn btn-primary mt-5 btn-color"
-                                            disabled>Save and Continue</button>
-                                    </form>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-
+                                        </div>
+                                        <div>
+                                            <input id="hiddenParagraph" readonly value="I challenged myself this year to be more adventurous and try my very best to step out of my comfort zone. I realized that this even happened without most of my input, curved balls were just thrown everywhere and luckily I was getting myself mentally prepared for this. The most yearned for and long awaited break named SUMMER was finally here and that meant many stuff for me. ">
+                                            </input>
+                                        </div>
+                                        <div style="hidden">
+                                            <input type="textbox" id="userInput" placeholder="Type here..." onkeypress="textComparison(event)"
+                                                onpaste="return false" />
+                                        </div>
+                                        <div>
+                                            <button id="startBtn" class="btn btn-success btn-color" onclick="startTimer()">Click
+                                                to
+                                                Start</button>
+                                        </div>
+                                        <br>
+                                        <div class="progress" style="height: 20px">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-gold"
+                                                role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"
+                                                style="width: 95%">95%</div>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <form action="/assessment/typing" method="POST">
+                                                    <input name="wpm" id="wpm" value="" />
+                                                    <button type="submit" id="nextBtn" class="btn btn-primary mt-5 btn-color"
+                                                        disabled>Save and Continue</button>
+                                                </form>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

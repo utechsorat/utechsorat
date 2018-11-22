@@ -1,10 +1,8 @@
 <div id="admin">
   <div class="admin-inner">
-
     <!-- sidebar -->
     {{> _sidebar}}
     <!-- end of sidebar -->
-
     <!-- cards -->
     <section>
       <div class="container-fluid">
@@ -102,7 +100,6 @@
       </div>
     </section>
     <!-- end of cards -->
-
     <!-- charts -->
     <section>
       <div class="container-fluid">
@@ -123,11 +120,8 @@
       </div>
     </section>
     <!-- end of charts -->
-
-
   </div>
 </div>
-
 <!-- chart data -->
 <script>
   var ctx = document.getElementById("ageChart");
@@ -148,7 +142,7 @@
     scales: {
       yAxes: [{
         ticks: {
-          beginAtZero: false
+          beginAtZero: true
         }
       }]
     },
@@ -178,7 +172,7 @@
     scales: {
       yAxes: [{
         ticks: {
-          beginAtZero: false
+          beginAtZero: true
         }
       }]
     },

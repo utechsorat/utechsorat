@@ -1,0 +1,46 @@
+<div id="admin">
+  <div class="admin-inner">
+    <!-- sidebar -->
+    {{> _sidebar}}
+    <!-- end of sidebar -->
+    <!-- table -->
+    <section>
+      <div class="container-fluid">
+        <div class="row my-sm-3">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row">
+              <div class="col-8 mx-auto">
+                <div class="col">
+                  <div class="card card-style text-dark">
+                    <div class="card-header text-center">
+                      <h4>Assessment Report</h4>
+                    </div>
+                    <div class="card-body ">
+                      <p class="lead mb-0"><strong>{{user.firstname}} {{user.lastname}}</strong></p>
+                      <p class="lead"><strong>{{user.email}}</strong></p>
+                      <table class="table">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">Factor</th>
+                            <th scope="col">Score</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {{#each result }}
+                          <tr class="bg-light m-2">
+                            <td>{{factor}}</td>
+                            <td>{{value}}</td>
+                          </tr>
+                          {{/each}}
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

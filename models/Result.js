@@ -25,7 +25,7 @@ const ResultSchema = new Schema({
     }
 });
 
-const Result = module.exports = mongoose.model('Result', ResultSchema, 'results');
+const Result = module.exports = mongoose.model('Result', ResultSchema);
 
 // add result
 module.exports.addResult = function(result, callback){

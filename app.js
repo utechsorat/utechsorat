@@ -8,35 +8,27 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 
-
 // load database config
 const db = require('./config/database');
 
 // load routes
 const users = require("./routes/users");
 const admin = require("./routes/admin");
-
-
 const assessment = require("./routes/assessment");
 const results = require("./routes/results");
 
-const report = require("./routes/report");
 
 const port = process.env.PORT || 3000;  
-
 const app = express();
 
 // passport config
 require("./config/passport")(passport);
-
-
 
 // mongoose middleware
 mongoose
   .connect(db.mongoURI, {useNewUrlParser: true})
   .then(() => console.log("MongoDB Connected..."))
   .catch(err => console.log(err));
-
 
 // express-handlebars middleware
 app.engine("handlebars", exphbs({
@@ -76,7 +68,6 @@ app.set("view engine", "handlebars");
 // method override middleware
 app.use(methodOverride('_method'))
 
-
 // body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -115,16 +106,11 @@ app.get("/", (req, res) => {
   });
 });
 
-
 // routes middleware
 app.use("/users", users);
 app.use("/admin", admin);
-
-
 app.use("/assessment", assessment);
 app.use("/results", results);
-
-app.use("/report", report);
 
 // invalid routes
 app.get("/*", (req, res, next) => {

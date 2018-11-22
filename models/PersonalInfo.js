@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// personal info schema
 const PersonalInfoSchema = new Schema({
     _id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -38,16 +37,3 @@ const PersonalInfoSchema = new Schema({
 });
 
 const PersonalInfo = module.exports = mongoose.model('PersonalInfo', PersonalInfoSchema);
-
-// add result
-module.exports.addPersonalInfo = function (personalInfo, callback) {
-    PersonalInfo.create(personalInfo, callback);
-}
-
-module.exports.removePersonalInfo = function (query, callback) {
-    PersonalInfo.findOneAndRemove(query, callback);
-}
-
-module.exports.getPersonalInfo = function (callback) {
-    PersonalInfo.find(callback);
-}

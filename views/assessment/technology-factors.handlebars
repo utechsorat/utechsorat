@@ -1,12 +1,9 @@
 <div id="assessment">
     <div class="assessment-inner">
-
-
         <section>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 mx-auto">
-
                         <div class="card text-dark mb-2">
                             <div class="card-body">
                                 <h1>{{title}}</h1>
@@ -17,7 +14,6 @@
                                     assesses factors that include: {{#each factors}}
                                     <span class="font-weight-bold">{{title}}</span>, {{/each}} etc.
                                 </p>
-
                                 <form action="/assessment/technology-factors" method="post">
                                     {{#each questions}}
                                     <div class="card bg-light mt-2">
@@ -26,7 +22,7 @@
                                                 <p>
                                                     {{text}}
                                                 </p>
-                                                <img src="{{image}}"  alt="" class="img-fluid img-thumbnail">
+                                                <img src="{{image}}" alt="" class="img-fluid img-thumbnail">
                                             </div>
                                             <div class="card-body">
                                                 {{#each answers}}
@@ -52,10 +48,7 @@
                                         <button type="submit" class="btn btn-primary btn-color">Save and Continue</a>
                                     </div>
                                 </form>
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>

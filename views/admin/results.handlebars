@@ -20,7 +20,6 @@
                       <th>First Name</th>
                       <th>Last Name</th>
                       <th>Email</th>
-                      <th>Admin</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -30,56 +29,8 @@
                       <td>{{firstname}}</td>
                       <td>{{lastname}}</td>
                       <td>{{email}}</td>
-                      <td><button class="btn btn-sm text-capitalize btn-block {{#if admin}} btn-success {{else}} btn-info {{/if}}"
-                          data-toggle="modal" data-target="#adm{{_id}}">{{admin}}</button></td>
-                      <td><button class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#del{{_id}}">Delete</button></td>
-                    </tr>
-                    <!-- admin modal -->
-                    <div class="modal fade" id="adm{{_id}}">
-                      <div class="modal-dialog text-muted">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modal-title">Admin Priviledges</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          </div>
-                          <div class="modal-body">
-                            Are you sure you wish to change admin priviledges for {{firstname}} {{lastname}}?
-                          </div>
-                          <div class="modal-footer">
-                            <a class="btn btn-info btn-sm text-white" data-dismiss="modal">Cancel</a>
-                            <form action="/admin/users/edit/{{_id}}?_method=PUT" method="post">
-                              <input type="hidden" name="_method" value="PUT">
-                              <input type="submit" class="btn btn-danger btn-sm text-white" value="Continue">
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end of modal -->
-
-                    <!-- delete modal -->
-                    <div class="modal fade" id="del{{_id}}">
-                      <div class="modal-dialog text-muted">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modal-title">Delete</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          </div>
-                          <div class="modal-body">
-                            Are you sure you wish to delete {{firstname}} {{lastname}}?
-                          </div>
-                          <div class="modal-footer">
-                            <a class="btn btn-info btn-sm text-white" data-dismiss="modal">Cancel</a>
-                            <form action="/admin/users/delete/{{_id}}?_method=DELETE" method="post">
-                              <input type="hidden" name="_method" value="DELETE">
-                              <input type="submit" class="btn btn-danger btn-sm text-white" value="Delete">
-                            </form>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- end of modal -->
+                      <td><a href="/admin/results/view/{{_id}}" class="btn btn-block btn-sm btn-success">View Results</a></td>
+                    </tr>   
                     {{/each}}
                   </tbody>
                 </table>
@@ -90,37 +41,37 @@
                   <ul class="pagination justify-content-center">
                     {{#if query}}
                     <li class="page-item">
-                      <a href="/admin/users/{{dec current}}?search={{query}}" class="page-link py-2 px-3">
+                      <a href="/admin/results/{{dec current}}?search={{query}}" class="page-link py-2 px-3">
                         <span>&laquo;</span>
                       </a>
                     </li>
                     {{#each pages}}
                     <li class="page-item {{#areEqual this ../current}}active{{/areEqual}}">
-                      <a href="/admin/users/{{this}}?search={{../query}}" class="page-link py-2 px-3">
+                      <a href="/admin/results/{{this}}?search={{../query}}" class="page-link py-2 px-3">
                         {{this}}
                       </a>
                     </li>
                     {{/each}}
                     <li class="page-item">
-                      <a href="/admin/users/{{inc current}}?search={{query}}" class="page-link py-2 px-3">
+                      <a href="/admin/results/{{inc current}}?search={{query}}" class="page-link py-2 px-3">
                         <span>&raquo;</span>
                       </a>
                     </li>
                     {{else}}
                     <li class="page-item">
-                      <a href="/admin/users/{{dec current}}" class="page-link py-2 px-3">
+                      <a href="/admin/results/{{dec current}}" class="page-link py-2 px-3">
                         <span>&laquo;</span>
                       </a>
                     </li>
                     {{#each pages}}
                     <li class="page-item {{#areEqual this ../current }} active{{/areEqual}}">
-                      <a href="/admin/users/{{this}}" class="page-link py-2 px-3">
+                      <a href="/admin/results/{{this}}" class="page-link py-2 px-3">
                         {{this}}
                       </a>
                     </li>
                     {{/each}}
                     <li class="page-item">
-                      <a href="/admin/users/{{inc current}}" class="page-link py-2 px-3">
+                      <a href="/admin/results/{{inc current}}" class="page-link py-2 px-3">
                         <span>&raquo;</span>
                       </a>
                     </li>
@@ -128,14 +79,11 @@
                   </ul>
                 </nav>
                 <!-- end of pagination -->
-
               </div>
             </div>
           </div>
         </div>
     </section>
-
-
   </div>
 </div>
 

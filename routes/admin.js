@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const passport = require("passport");
 const {
   ensureAuthenticated
 } = require("../helpers/auth");
@@ -38,10 +36,8 @@ const upload = multer({
   fileFilter: fileFilter
 }).single('questionImage');
 
-
 var passageP1 =
   'Washington DC is the capital of the United States of America. Washington takes its name from the first president of America , George Washington. The "Columbia" in "District of Columbia" stands for ............. well there are many theories to why it was named "Columbia"( I just hope it had nothing to do with Christopher Columbus because I know he did not "discover" that area of land too ). The capital of the United States is home to over 10 memorials and landmarks that commemorate some astounding events in history. These exquisitely designed landmarks attract tourists from across the globe.'
-
 
 var passageP2 = "I visited Washington DC in the summer of 2014 and it was extremely hot, so if you are planning to visit stock up on bottles of water and some sunscreen. Areas near landmarks are only accessible by foot so comfortable shoes are a must. If you are adventurous like I am then you will want to visit most of the landmarks which is alot alot ALOT of walking lol, so some earphones and your favourite playlist will keep you energized and moving quickly.  What is a trip without pictures?? Selfie!!! Ensure you have a reliable camera and always have charged batteries or a powerbank."
 
@@ -50,13 +46,12 @@ const User = require("../models/User");
 const Factor = require("../models/Factor");
 const Question = require("../models/Question")
 const PersonalInfo = require("../models/PersonalInfo");
+const Result = require("../models/Result");
 
 // dashboard get route
-router.get("/dashboard", (req, res) => {
-
+router.get("/dashboard", ensureAuthenticated, adminAuthenticated, (req, res) => {
   var age = [];
   var ageCount = [];
-
   var residence = [];
   var residenceCount = [];
 
@@ -89,12 +84,10 @@ router.get("/dashboard", (req, res) => {
                             }
                           }])
                         .then(residenceResults => {
-
                           for (var i = 0; i < residenceResults.length; i++) {
                             residence.push(residenceResults[i]._id);
                             residenceCount.push(residenceResults[i].count);
                           }
-
                           PersonalInfo.aggregate(
                               [{
                                 $group: {
@@ -105,13 +98,10 @@ router.get("/dashboard", (req, res) => {
                                 }
                               }])
                             .then(ageResults => {
-
                               for (var i = 0; i < ageResults.length; i++) {
                                 age.push(ageResults[i]._id);
                                 ageCount.push(ageResults[i].count);
                               }
-
-
                               res.render("admin/dashboard", {
                                 dashboard: true,
                                 userCount: users.length,
@@ -128,12 +118,10 @@ router.get("/dashboard", (req, res) => {
                             .catch(err => {
                               console.log(err)
                             })
-
                         })
                         .catch(err => {
                           console.log(err);
                         })
-
                     })
                     .catch(err => {
                       console.log(err)
@@ -150,13 +138,11 @@ router.get("/dashboard", (req, res) => {
         .catch(err => {
           console.log(err);
         })
-
     });
 });
 
 // users get route
 router.get("/users/:page", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
-
   if (req.query.search) {
     const perPage = 5;
     const page = req.params.page || 1;
@@ -184,7 +170,6 @@ router.get("/users/:page", ensureAuthenticated, adminAuthenticated, (req, res, n
           });
         });
       });
-
   } else {
     const perPage = 5;
     const page = req.params.page || 1;
@@ -208,18 +193,20 @@ router.get("/users/:page", ensureAuthenticated, adminAuthenticated, (req, res, n
           });
         });
       });
-
   }
 });
 
 // users delete route
 router.delete('/users/delete/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
-  User.deleteOne({
-      _id: req.params.id
-    })
-    .then(() => {
-      res.redirect('back');
-    });
+  const id = req.params.id;
+  User.findOne({
+    _id: id
+  }, function (err, user) {
+    user.remove()
+      .then(() => {
+        res.redirect('back');
+      });
+  });
 });
 
 // users priviledge put route
@@ -237,16 +224,8 @@ router.put('/users/edit/:id', ensureAuthenticated, adminAuthenticated, (req, res
     });
 });
 
-
-
-
-
-
-
-
 // factors get route
 router.get("/factors/:page", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
-
   if (req.query.search) {
     const perPage = 5;
     const page = req.params.page || 1;
@@ -274,7 +253,6 @@ router.get("/factors/:page", ensureAuthenticated, adminAuthenticated, (req, res,
           });
         });
       });
-
   } else {
     const perPage = 5;
     const page = req.params.page || 1;
@@ -300,9 +278,8 @@ router.get("/factors/:page", ensureAuthenticated, adminAuthenticated, (req, res,
       });
   }
 });
-
 // add factor get route
-router.get('/factor/add', (req, res, next) => {
+router.get('/factor/add', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("admin/add-factor", {
     factorsActive: true
   });
@@ -317,7 +294,6 @@ router.post('/factor/add', ensureAuthenticated, adminAuthenticated, (req, res, n
   factor.lowResponse = req.body.lowresponse;
   factor.mediumResponse = req.body.mediumresponse;
   factor.highResponse = req.body.highresponse;
-
   factor.save()
     .then(factor => {
       res.redirect('/admin/factors/1');
@@ -325,7 +301,7 @@ router.post('/factor/add', ensureAuthenticated, adminAuthenticated, (req, res, n
 })
 
 // edit factor get route
-router.get('/factor/edit/:id', (req, res, next) => {
+router.get('/factor/edit/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   Factor.findOne({
       _id: req.params.id
     })
@@ -348,7 +324,6 @@ router.put('/factor/edit/:id', ensureAuthenticated, adminAuthenticated, (req, re
       factor.lowResponse = req.body.lowresponse;
       factor.mediumResponse = req.body.mediumresponse;
       factor.highResponse = req.body.highresponse;
-
       factor.save()
         .then(factor => {
           res.redirect('/admin/factors/1');
@@ -359,7 +334,6 @@ router.put('/factor/edit/:id', ensureAuthenticated, adminAuthenticated, (req, re
 // factor delete route
 router.delete('/factors/delete/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   const id = req.params.id;
-
   Factor.findOne({
     _id: id
   }, function (err, factor) {
@@ -369,16 +343,6 @@ router.delete('/factors/delete/:id', ensureAuthenticated, adminAuthenticated, (r
       });
   });
 });
-
-
-
-
-
-
-
-
-
-
 
 // questions get route
 router.get("/questions/:page", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
@@ -402,7 +366,6 @@ router.get("/questions/:page", ensureAuthenticated, adminAuthenticated, (req, re
           for (var i = 1; i <= Math.ceil(count / perPage); i++) {
             pageArray.push(i);
           }
-
           res.render("admin/factors", {
             questionsActive: true,
             questions: questions,
@@ -412,7 +375,6 @@ router.get("/questions/:page", ensureAuthenticated, adminAuthenticated, (req, re
           });
         });
       });
-
   } else {
     const perPage = 5;
     const page = req.params.page || 1;
@@ -454,7 +416,6 @@ router.get('/question/add', ensureAuthenticated, adminAuthenticated, (req, res, 
 
 // add question post route
 router.post('/question/add', upload, (req, res, next) => {
-
   let maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value));
   Factor.findOne({
       title: req.body.factor
@@ -468,9 +429,6 @@ router.post('/question/add', upload, (req, res, next) => {
       if (req.file) {
         question.image = req.file.path.slice(6)
       }
-
-
-
       const options = [{
           name: "Opt1",
           text: req.body.Opt1,
@@ -482,8 +440,6 @@ router.post('/question/add', upload, (req, res, next) => {
           value: Number(req.body.Opt2Value)
         }
       ];
-
-
       if (req.body.Opt3) {
         options.push({
           name: "Opt3",
@@ -492,7 +448,6 @@ router.post('/question/add', upload, (req, res, next) => {
         });
         maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value));
       }
-
       if (req.body.Opt4) {
         options.push({
           name: "Opt4",
@@ -501,7 +456,6 @@ router.post('/question/add', upload, (req, res, next) => {
         });
         maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value), Number(req.body.Opt4Value));
       }
-
       if (req.body.Opt5) {
         options.push({
           name: "Opt5",
@@ -510,12 +464,8 @@ router.post('/question/add', upload, (req, res, next) => {
         });
         maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value), Number(req.body.Opt4Value), Number(req.body.Opt5Value));
       }
-
       question.answers = options;
       question.maxValue = maxValue;
-
-
-
       question.save()
         .then(question => {
           factor.highestScore = factor.highestScore + maxValue;
@@ -541,7 +491,6 @@ router.get('/question/edit/:id', ensureAuthenticated, adminAuthenticated, (req, 
             questionsActive: true,
             question: question,
             factors: factors
-
           });
         });
     });
@@ -571,9 +520,7 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
               value: Number(req.body.Opt2Value)
             }
           ];
-
           maxValue = Number(req.body.Opt1Value) + Number(req.body.Opt2Value);
-
           if (req.body.Opt3) {
             options.push({
               name: "Opt3",
@@ -582,7 +529,6 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
             });
             maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value));
           }
-
           if (req.body.Opt4) {
             options.push({
               name: "Opt4",
@@ -591,7 +537,6 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
             });
             maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value), Number(req.body.Opt4Value));
           }
-
           if (req.body.Opt5) {
             options.push({
               name: "Opt5",
@@ -600,7 +545,6 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
             });
             maxValue = Math.max(Number(req.body.Opt1Value), Number(req.body.Opt2Value), Number(req.body.Opt3Value), Number(req.body.Opt4Value), Number(req.body.Opt5Value));
           }
-
           question.answers = options
           question.maxValue = maxValue;
           question.text = req.body.text;
@@ -630,9 +574,6 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
           if (req.file) {
             question.image = req.file.path.slice(6)
           }
-
-
-
           question.save()
             .then(question => {
               factor.save()
@@ -647,7 +588,6 @@ router.put('/question/edit/:id', upload, (req, res, next) => {
 // factor delete route
 router.delete('/questions/delete/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   const id = req.params.id;
-
   Question.findOne({
     _id: id
   }, function (err, question) {
@@ -664,20 +604,9 @@ router.delete('/questions/delete/:id', ensureAuthenticated, adminAuthenticated, 
                 res.redirect('back');
               })
           })
-
       });
   });
 });
-
-
-
-
-
-
-
-
-
-
 
 // admin previews route
 router.get("/preview/introduction", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
@@ -793,24 +722,81 @@ router.get("/preview/reading-questions", ensureAuthenticated, adminAuthenticated
   });
 });
 
+router.get("/results/:page", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  if (req.query.search) {
+    const perPage = 5;
+    const page = req.params.page || 1;
+    const query = {
+      lastname: req.query.search
+    } || {};
+    User.find(query)
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function (err, users) {
+        User.countDocuments(query).exec(function (err, count) {
+          if (err) {
+            return next(err)
+          }
+          const pageArray = [];
+          for (var i = 1; i <= Math.ceil(count / perPage); i++) {
+            pageArray.push(i);
+          }
+          res.render("admin/results", {
+            resultsActive: true,
+            users: users,
+            current: Number(page),
+            pages: pageArray,
+            query: req.query.search
+          });
+        });
+      });
+  } else {
+    const perPage = 5;
+    const page = req.params.page || 1;
+    User.find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function (err, users) {
+        User.countDocuments().exec(function (err, count) {
+          if (err) {
+            return next(err)
+          }
+          const pageArray = [];
+          for (var i = 1; i <= Math.ceil(count / perPage); i++) {
+            pageArray.push(i);
+          }
+          res.render("admin/results", {
+            resultsActive: true,
+            users: users,
+            current: Number(page),
+            pages: pageArray
+          });
+        });
+      });
+  }
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-// admin results route
-router.get("/results", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
-  res.render("admin/results", {
-    results: true
-  });
+// view individual factor get route
+router.get('/results/view/:id', ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  User.findOne({
+      _id: req.params.id
+    })
+    .select('firstname lastname email')
+    .exec()
+    .then(user => {
+      Result.find({
+          user: req.params.id
+        })
+        .select('factor value')
+        .exec()
+        .then(result => {
+          res.render("admin/view-result", {
+            resultsActive: true,
+            result: result,
+            user: user
+          });
+        });
+    })
 });
 
 // admin settings route
@@ -820,6 +806,18 @@ router.get("/settings", ensureAuthenticated, adminAuthenticated, (req, res, next
   });
 });
 
+router.get("/reset-assessment", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
+  User.findOne({_id: req.user._id})
+  .then(user => {
+    user.section = 'personal-information'
+    user.save();
+    res.redirect("/assessment");
+  })
+  .catch(err => {
+    console.log(err)
+  })
+});
+
 // admin settings route
 router.get("/documentation", ensureAuthenticated, adminAuthenticated, (req, res, next) => {
   res.render("admin/documentation", {
@@ -827,11 +825,8 @@ router.get("/documentation", ensureAuthenticated, adminAuthenticated, (req, res,
   });
 });
 
-
-
 router.get("/*", (req, res, next) => {
   res.redirect("/");
 });
-
 
 module.exports = router;
